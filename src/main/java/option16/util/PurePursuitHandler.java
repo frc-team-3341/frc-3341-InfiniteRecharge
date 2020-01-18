@@ -21,7 +21,7 @@ public class PurePursuitHandler {
      * This function exists purely so that the end user does not have to call multiple methods to get this
      * velocity, but rather just this one method.
      *
-     * @return
+     * @return An array with two values, index 0 is the velocity for the left wheel and index 1 is the velocity for right wheel.
      */
     public static double[] getNextVelocities(Odometry odo){
         Odometry robotOdo = odo;
@@ -189,11 +189,16 @@ public class PurePursuitHandler {
     }
 
     /**
+     * Clears the current path.
+     */
+    public static void clearPath() {path = new ArrayList<Point>(); }
+
+    /**
      * Gets the lookahead distance.
      *
      * @return The lookahead distance of the robot.
      */
-    private static float getLookaheadDistance(){
+    public static float getLookaheadDistance(){
         return lookaheadDistance;
     }
 
