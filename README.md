@@ -12,8 +12,8 @@
 | integrated_robot | Includes all drive station code.                             |
 
 ## High Level Software Plan
+ Fill this out based on discussions from the Software Solutions meeting on 1/11/2020
 
-> TODO: **@DanielRyu** (Acknowledgeed Master of Puns) will fill this out based on discussions from the Software Solutions meeting on 1/11/2020
 
 ## Specific Software Plans
 
