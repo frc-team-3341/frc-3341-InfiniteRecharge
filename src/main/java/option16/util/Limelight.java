@@ -9,8 +9,7 @@ public class Limelight {
 	private static NetworkTableEntry tv, tx, ty, ta;
 	private static int v;
 	private static double x, y, a;
-	private static double moveP, moveMin, moveMax, targetY;
-	private static double alignP, alignMin, alignMax;
+	private static double targetY;
 	private static double ballheight = 3.5; //inches
 	private static double cameraheight = 10.5; //inches
 
