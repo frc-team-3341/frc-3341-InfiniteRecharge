@@ -2,20 +2,25 @@
 
 ## Requirements
 
-Insert a high level description of what this system is attempting to do, but be detailed about it. Think of it like your module’s software “playbook” (like in football). For example, an autonomous description could be:
+During the first 15 seconds, we have three pathways we plan to put the robot through, depending on the starting position of the robot. The pathways are outlined below:
 
-> During the 15 second autonomous period, we plan to move past the auto starting line, move through our alliance trench, and score the three on-board balls into the hole. We plan to account for three different starting robot configurations (left, center, and right).
+Path 1: The robot will start on the sideline, next to our alliance robot who will be in front of a goal. The robot will then move to where the alliance robot is after the alliance robot scores, and we will score after our alliance does, and then we plan to cross the auto line.
+
+Path 2: The robot will start in front of the goal, score, cross the autoline, and look for balls in order to get ready to score in tele-op.
+
+Path 3: The robot will start elsewhere, not near the goal or at the goal, and the robot will just cross the auto line and look for balls.
 
 ## Procedure
 
-Describe with more detail exactly how the high level requirement will be executed. Include implementation details, like which algorithms you will be using, what sensors you will be accessing. For example, a description of an autonomous winch operation could be:
+Path 1: The robot will wait for an inputed amount (through driver station) before it displaces the position of the alliance robot. After it is at the location of the alliance robot, it will turn and score with it's current amount of balls. After, it will turn again and cross the line. We plan to use encoders for movement and gyros for the turning. It will score using the talons on the dispenser.
 
-> The winch will be directly controlled by the teleoperated driver using the Joystick #3. We will map the vertical position of the joystick to the winch’s rotation velocity. To ensure the winch is stable, but we do not stall the motor, we will monitor the current that the motor draws dynamically. If the current drawn surpasses a specific threshold, the power to the motor will be reduced/cut off.
+Path 2: The robot will start in front of the goal, oriented towards the goal, and it will start by dispensing the balls (using the talon SRX). Then it will turn using the gyro, and after, the robot will cross the auto line using encoders. After driving a certain amount of distance (into the vicinity of the balls), the robot driving will be taken over by limelight so that we can place the robot in front of a ball.
 
+Path 3: The robot will start oriented toward the auto line. It's first task will be to drive forward to cross the auto line using encoders, and after driving a certain distance (into the general area of the balls), we will use the limelight to track a ball so that the robot can drive toward it.
 ## Timeline/Details
 
 Again this a sample, but this is what it would like for the same example as the last:
 
-- [x] **1/7/2020** - Create the software documentation markdown page.
-- [ ] **1/9/2020** - Acquire data from the motor controller that specifies how much current a specific motor is drawing
-- [ ] **1/15/2020** - Implement and test velocity control PID
+- [x] **1/7/2020** - Create the autnomous pathways.
+- [x] **1/9/2020** - Download the new software from ctre
+- [ ] **1/15/2020** - start implementing code.
