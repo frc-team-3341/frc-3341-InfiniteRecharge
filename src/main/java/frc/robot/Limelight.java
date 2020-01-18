@@ -1,5 +1,5 @@
 package frc.robot;
-
+import Math;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -11,6 +11,9 @@ public class Limelight {
 	private static double x, y, a;
 	private static double moveP, moveMin, moveMax, targetY;
 	private static double alignP, alignMin, alignMax;
+	private static double ballheight = 3.5; //inches
+	private static double cameraheight = 10.5; //inches
+
 
 	static {
 		table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -86,5 +89,9 @@ public class Limelight {
 
 	public static void flash() {
 		table.getEntry("ledMode").setNumber(2);
+	}
+
+	public static void estimateDistance(double a1, double a2){
+		return (cameraheight-ballheight)/Math.tan(a1+a2);
 	}
 }
