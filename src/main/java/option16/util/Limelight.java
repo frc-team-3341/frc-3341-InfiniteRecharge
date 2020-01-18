@@ -14,8 +14,6 @@ public class Limelight {
 	private static double ballheight = 3.5; //inches
 	private static double cameraheight = 10.5; //inches
 
-	private static double moveP, targetY;
-	private static double alignP;
 	private static PID movePID, alignPID;
 
 	static {
@@ -86,7 +84,7 @@ public class Limelight {
 		table.getEntry("ledMode").setNumber(2);
 	}
 
-	public static void estimateDistance(double a1, double a2){
+	public static double estimateDistance(double a1, double a2){
 		return (cameraheight-ballheight)/Math.tan(a1+a2);
 	}
 }

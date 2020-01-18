@@ -10,7 +10,7 @@ package option16.util;
 
 import java.util.ArrayList;
 
-public class PurePursuitHandler {
+public class PurePursuit {
     private static ArrayList<Point> path = new ArrayList<>();
     private static float lookaheadDistance = Constants.lookaheadDistance;
     private static boolean finished = false;
