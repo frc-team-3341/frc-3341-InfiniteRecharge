@@ -9,6 +9,11 @@ public class Limelight {
 	private static NetworkTableEntry tv, tx, ty, ta;
 	private static int v;
 	private static double x, y, a;
+	private static double moveP, moveMin, moveMax, targetY;
+	private static double alignP, alignMin, alignMax;
+	private static double ballheight = 3.5; //inches
+	private static double cameraheight = 10.5; //inches
+
 	private static double moveP, targetY;
 	private static double alignP;
 	private static PID movePID, alignPID;
@@ -79,5 +84,9 @@ public class Limelight {
 
 	public static void flash() {
 		table.getEntry("ledMode").setNumber(2);
+	}
+
+	public static void estimateDistance(double a1, double a2){
+		return (cameraheight-ballheight)/Math.tan(a1+a2);
 	}
 }
