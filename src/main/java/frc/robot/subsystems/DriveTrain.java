@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 
@@ -20,22 +21,29 @@ public class DriveTrain extends SubsystemBase {
    */
   private WPI_TalonSRX left = new WPI_TalonSRX(2);
   private WPI_TalonSRX right = new WPI_TalonSRX(3);
-  private WPI_TalonSRX leftFollow = new WPI_TalonSRX(4);
-  private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
+  //private WPI_TalonSRX leftFollow = new WPI_TalonSRX(4);
+  //private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
+  private DifferentialDrive drive;
   public DriveTrain() {
-    
+    drive = new DifferentialDrive(left, right);
   }
 
   
   public void tankDrive(double leftpower, double rightpower){
-    left.set(ControlMode.PercentOutput, leftpower);
-    right.set(ControlMode.PercentOutput, rightpower);
-    leftFollow.set(ControlMode.Follower, 2);
-    rightFollow.set(ControlMode.Follower, 3);
+    //left.set(ControlMode.PercentOutput, leftpower);
+	//right.set(ControlMode.PercentOutput, rightpower);
+	drive.tankDrive(leftpower, rightpower);
+    //leftFollow.set(ControlMode.Follower, 2);
+    //rightFollow.set(ControlMode.Follower, 3);
+  }
+  public void arcadeDrive(double move, double turn) {
+	  drive.arcadeDrive(move, turn);
+	  //leftFollow.set(ControlMode.Follower, 2);
+	  //rightFollow.set(ControlMode.Follower, 3);
   }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    tankDrive(Robot.m_robotContainer.getLeftJoy().getY(), Robot.m_robotContainer.getRightJoy().getY());
+    tankDrive(-Robot.m_robotContainer.getLeftJoy().getY(), -Robot.m_robotContainer.getRightJoy().getY());
   }
 }
