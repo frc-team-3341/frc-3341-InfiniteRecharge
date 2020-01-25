@@ -10,10 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.MoveAndAlignToBall;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -24,11 +23,12 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  
   public DriveTrain drive = new DriveTrain();
   public NavX navx = new NavX();
+
+  private final MoveAndAlignToBall m_autoCommand = new MoveAndAlignToBall(drive);
+
   private Joystick leftJoy;
   private Joystick rightJoy;
 
@@ -37,8 +37,8 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    leftJoy = new Joystick(2);
-    rightJoy = new Joystick(3);
+    leftJoy = new Joystick(0);
+    rightJoy = new Joystick(1);
     // Configure the button bindings
     configureButtonBindings();
   }
