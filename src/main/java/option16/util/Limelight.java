@@ -7,9 +7,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class Limelight {
 	private static NetworkTable table;
 	private static NetworkTableEntry tv, tx, ty, ta;
+	private static int pipeline = 0;
 	private static int v;
-	private static double x, y, a;
-	private static double targetY;
+	private static double x, y, area;
+	private static double targetArea;
 	private static double ballheight = 3.5; //inches
 	private static double cameraheight = 10.5; //inches
 	private static PID movePID, alignPID;
@@ -20,25 +21,33 @@ public class Limelight {
 		tx = table.getEntry("tx");
 		ty = table.getEntry("ty");
 		ta = table.getEntry("ta");
+		movePID = new PID(0, 0, 0);
+		alignPID = new PID(0, 0, 0);
 	}
 
 	public static void update() {
-		table.getEntry("pipeline").setNumber(2);
+		table.getEntry("pipeline").setNumber(pipeline);
 		table.getEntry("ledMode").setNumber(0);
 		v = (int) tv.getDouble(0.0);
 		x = tx.getDouble(0.0);
 		y = ty.getDouble(0.0);
-		a = ta.getDouble(0.0);
+		area = ta.getDouble(0.0);
 		if (v == 0) {
 			movePID.reset();
 			alignPID.reset();
 		}
-		movePID.update(targetY - y);
+		movePID.update(targetArea - area);
 		alignPID.update(x);
 	}
 
 	public static void disable() {
 		table.getEntry("pipeline").setNumber(0);
+	}
+
+	public static void setPipeline(int num) {
+		if (num >= 0 && num <= 9) {
+			pipeline = num;
+		}
 	}
 
 	public static int getV() {
@@ -50,16 +59,16 @@ public class Limelight {
 	public static double getY() {
 		return y;
 	}
-	public static double getA() {
-		return a;
+	public static double getArea() {
+		return area;
 	}
 	public static NetworkTableEntry getEntry(String entry) {
 		return table.getEntry(entry);
 	}
 
-	public static void setMoveConstants(double kp, double ki, double kd, double y) {
+	public static void setMoveConstants(double kp, double ki, double kd, double area) {
 		movePID = new PID(kp, ki, kd);
-		targetY = y;
+		targetArea = area;
 	}
 	public static void setAlignConstants(double kp, double ki, double kd) {
 		alignPID = new PID(kp, ki, kd);
