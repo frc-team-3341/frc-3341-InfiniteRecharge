@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 
@@ -16,10 +18,10 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Creates a new DriveTrain.
    */
-  private TalonSRX left = new TalonSRX(2);
-  private TalonSRX right = new TalonSRX(3);
-  private TalonSRX leftFollow = new TalonSRX(4);
-  private TalonSRX rightFollow = new TalonSRX(5);
+  private WPI_TalonSRX left = new WPI_TalonSRX(2);
+  private WPI_TalonSRX right = new WPI_TalonSRX(3);
+  private WPI_TalonSRX leftFollow = new WPI_TalonSRX(4);
+  private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
   public DriveTrain() {
     
   }
