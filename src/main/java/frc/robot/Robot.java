@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import option16.util.Limelight;
 
@@ -32,7 +33,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+	m_robotContainer = new RobotContainer();
+	Limelight.setPipeline(3);
   }
 
   /**
@@ -49,7 +51,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
 	CommandScheduler.getInstance().run();
-	Limelight.setPipeline(3);
 	Limelight.update();
   }
 
@@ -62,6 +63,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+	if (m_robotContainer.leftGetRawButton(1)) {
+		m_autonomousCommand = m_robotContainer.moveAndAlignToBall;
+	} else if (m_robotContainer.leftGetRawButton(2)) {
+		m_autonomousCommand = m_robotContainer.turn;
+	}
+	//m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+	SmartDashboard.putString("Selected Auto Command", m_autonomousCommand.getClass().getSimpleName());
   }
 
   /**
@@ -69,8 +77,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
