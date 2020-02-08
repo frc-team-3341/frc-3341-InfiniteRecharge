@@ -1,6 +1,6 @@
 package option16.util;
 
-class PID {
+public class PID {
 	private double kp, ki, kd;
 	private double error, sum, slope;
 	public PID(double kp, double ki, double kd) {
@@ -10,7 +10,9 @@ class PID {
 	}
 	public void update(double newError) {
 		this.sum += newError;
-		this.slope = newError - this.error;
+		if (this.error != 0) {
+			this.slope = newError - this.error;
+		}
 		this.error = newError;
 	}
 	public double getPower() {
