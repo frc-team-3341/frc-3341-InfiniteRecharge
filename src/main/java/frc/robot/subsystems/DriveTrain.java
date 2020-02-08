@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -31,13 +31,31 @@ public class DriveTrain extends SubsystemBase {
 	right.setNeutralMode(NeutralMode.Brake);
 	rightFollow.setNeutralMode(NeutralMode.Brake);
     drive = new DifferentialDrive(left, right);
+    left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    left.setSelectedSensorPosition(0, 0, 10);
+    right.setSelectedSensorPosition(0, 0, 10);
   }
-
-  
-  public void tankDrive(double left, double right, boolean squareInputs){
-	drive.tankDrive(left, right, squareInputs);
-    leftFollow.set(ControlMode.Follower, 2);
-    rightFollow.set(ControlMode.Follower, 3);
+  public void resetEncoders(){
+    left.setSelectedSensorPosition(0, 0, 10);
+    right.setSelectedSensorPosition(0, 0, 10);
+  }
+  public double getPosition(){
+    return (left.getSelectedSensorPosition()+right.getSelectedSensorPosition())/2;
+  }
+  public double getLeftPosition(){
+    return left.getSelectedSensorPosition();
+  }
+  public double getRightPosition(){
+    return right.getSelectedSensorPosition();
+  }
+  /*public double getSpeed(){
+    return left.getSensorCollection().getPulseWidthVelocity() * 1 / (4096 * 10);
+  }*/
+  public void tankDrive(double leftpower, double rightpower, boolean squareInputs){
+	drive.tankDrive(leftpower, rightpower, squareInputs);
+    //leftFollow.set(ControlMode.Follower, 2);
+    //rightFollow.set(ControlMode.Follower, 3);
   }
   public void arcadeDrive(double move, double turn, boolean squareInputs) {
 	  drive.arcadeDrive(move, turn, squareInputs);
