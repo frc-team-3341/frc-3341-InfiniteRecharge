@@ -30,7 +30,7 @@ public class DriveTrain extends SubsystemBase {
     left.setSelectedSensorPosition(0, 0, 10);
     right.setSelectedSensorPosition(0, 0, 10);
   }
-  public void resetEncoder(){
+  public void resetEncoders(){
     left.setSelectedSensorPosition(0, 0, 10);
     right.setSelectedSensorPosition(0, 0, 10);
   }
