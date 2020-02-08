@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.MoveAndAlignToBall;
+import frc.robot.commands.Turn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
 
@@ -28,10 +29,11 @@ public class RobotContainer {
   public DriveTrain drive = new DriveTrain();
   public NavX navx = new NavX();
 
-  private final MoveAndAlignToBall m_autoCommand = new MoveAndAlignToBall(drive);
+  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall(drive);
+  public final Turn turn = new Turn(90, drive, navx);
 
-  private Joystick leftJoy;
-  private Joystick rightJoy;
+  private final Joystick leftJoy;
+  private final Joystick rightJoy;
 
 
   /**
@@ -66,6 +68,13 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return moveAndAlignToBall;
+  }
+
+  public boolean leftGetRawButton(int n) {
+	  return leftJoy.getRawButton(n);
+  }
+  public boolean rightGetRawButton(int n) {
+	  return rightJoy.getRawButton(n);
   }
 }
