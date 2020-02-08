@@ -7,8 +7,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -26,9 +25,27 @@ public class DriveTrain extends SubsystemBase {
   private DifferentialDrive drive;
   public DriveTrain() {
     drive = new DifferentialDrive(left, right);
+    left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    left.setSelectedSensorPosition(0, 0, 10);
+    right.setSelectedSensorPosition(0, 0, 10);
   }
-
-  
+  public void resetEncoder(){
+    left.setSelectedSensorPosition(0, 0, 10);
+    right.setSelectedSensorPosition(0, 0, 10);
+  }
+  public double getPosition(){
+    return (left.getSelectedSensorPosition()+right.getSelectedSensorPosition())/2;
+  }
+  public double getLeftPosition(){
+    return left.getSelectedSensorPosition();
+  }
+  public double getRightPosition(){
+    return right.getSelectedSensorPosition();
+  }
+  /*public double getSpeed(){
+    return left.getSensorCollection().getPulseWidthVelocity() * 1 / (4096 * 10);
+  }*/
   public void tankDrive(double leftpower, double rightpower){
     //left.set(ControlMode.PercentOutput, leftpower);
 	//right.set(ControlMode.PercentOutput, rightpower);
