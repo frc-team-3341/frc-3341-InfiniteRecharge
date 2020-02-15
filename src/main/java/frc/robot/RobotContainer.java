@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.Aquire;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.BallScorer;
@@ -29,7 +30,7 @@ public class RobotContainer {
   public static BallScorer scorer = new BallScorer();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  private static Aquire m_Aquire = new Aquire(scorer);
 
 private Joystick shooterJoy = new Joystick(2);
 private JoystickButton storeButton = new JoystickButton(shooterJoy, 4);
