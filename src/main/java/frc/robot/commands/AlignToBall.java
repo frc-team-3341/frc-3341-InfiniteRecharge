@@ -24,7 +24,6 @@ public class AlignToBall extends CommandBase {
   public AlignToBall(DriveTrain d) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.d = d;
-    addRequirements(d);
     Limelight.setAlignConstants(pidShuffleboard.getP(), pidShuffleboard.getI(), pidShuffleboard.getD());
   }
 

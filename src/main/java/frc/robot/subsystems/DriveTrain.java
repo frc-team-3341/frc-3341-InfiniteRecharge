@@ -25,6 +25,7 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX leftFollow = new WPI_TalonSRX(4);
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
   private DifferentialDrive drive;
+  private double turn;
   public DriveTrain() {
 	  left.setNeutralMode(NeutralMode.Brake);
 	  leftFollow.setNeutralMode(NeutralMode.Brake);
@@ -53,18 +54,25 @@ public class DriveTrain extends SubsystemBase {
     return left.getSensorCollection().getPulseWidthVelocity() * 1 / (4096 * 10);
   }*/
   public void tankDrive(double leftpower, double rightpower, boolean squareInputs){
-	drive.tankDrive(leftpower, rightpower, squareInputs);
-    //leftFollow.set(ControlMode.Follower, 2);
-    //rightFollow.set(ControlMode.Follower, 3);
+	  drive.tankDrive(leftpower, rightpower, squareInputs);
+    leftFollow.set(ControlMode.Follower, 2);
+    rightFollow.set(ControlMode.Follower, 3);
   }
   public void arcadeDrive(double move, double turn, boolean squareInputs) {
 	  drive.arcadeDrive(move, turn, squareInputs);
 	  leftFollow.set(ControlMode.Follower, 2);
 	  rightFollow.set(ControlMode.Follower, 3);
   }
+
+  public void align(double turn) {
+    this.turn = turn;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    tankDrive(-Robot.m_robotContainer.getLeftJoy().getY(), -Robot.m_robotContainer.getRightJoy().getY(), true);
+    double left = -Robot.m_robotContainer.getLeftJoy().getY(), right = -Robot.m_robotContainer.getRightJoy().getY();
+    tankDrive(left * Math.abs(left) + turn, right * Math.abs(right) - turn, false);
+    turn = 0;
   }
 }
