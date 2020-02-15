@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.AutoPath;
 import frc.robot.commands.MoveAndAlignToBall;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
@@ -28,6 +29,8 @@ public class RobotContainer {
   public NavX navx = new NavX();
 
   private final MoveAndAlignToBall m_autoCommand = new MoveAndAlignToBall(drive);
+  private final AutoPath m_autoCommand2 = new AutoPath(drive, navx);
+
 
   private Joystick leftJoy;
   private Joystick rightJoy;
@@ -65,6 +68,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autoCommand2;
+    //return null;
   }
 }

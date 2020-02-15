@@ -27,6 +27,11 @@ public class DriveTrain extends SubsystemBase {
     drive = new DifferentialDrive(left, right);
     left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
     right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    //left.setInverted(true);
+    //right.setInverted(true);
+    left.setSensorPhase(true);
+    right.setSensorPhase(true);
+
     left.setSelectedSensorPosition(0, 0, 10);
     right.setSelectedSensorPosition(0, 0, 10);
   }
@@ -35,7 +40,7 @@ public class DriveTrain extends SubsystemBase {
     right.setSelectedSensorPosition(0, 0, 10);
   }
   public double getPosition(){
-    return (left.getSelectedSensorPosition()+right.getSelectedSensorPosition())/2;
+    return (left.getSelectedSensorPosition()-right.getSelectedSensorPosition())/2;
   }
   public double getLeftPosition(){
     return left.getSelectedSensorPosition();
@@ -58,9 +63,14 @@ public class DriveTrain extends SubsystemBase {
 	  //leftFollow.set(ControlMode.Follower, 2);
 	  //rightFollow.set(ControlMode.Follower, 3);
   }
+  int temp = 0;
   @Override
+  
   public void periodic() {
     // This method will be called once per scheduler run
-    tankDrive(-Robot.m_robotContainer.getLeftJoy().getY(), -Robot.m_robotContainer.getRightJoy().getY());
+    
+    tankDrive(-Robot.m_robotContainer.getLeftJoy().getY()+Robot.m_robotContainer.getLeftJoy().getZ(), -Robot.m_robotContainer.getLeftJoy().getY() - Robot.m_robotContainer.getLeftJoy().getZ());
+    //System.out.println("periodic is running" + temp);
   }
+
 }
