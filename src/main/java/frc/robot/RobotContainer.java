@@ -7,11 +7,13 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AlignToBall;
+import frc.robot.commands.Move;
 import frc.robot.commands.MoveAndAlignToBall;
 import frc.robot.commands.Turn;
 import frc.robot.subsystems.DriveTrain;
@@ -30,7 +32,9 @@ public class RobotContainer {
   public NavX navx = new NavX();
 
   public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall(drive);
+  public final AlignToBall alignToBall = new AlignToBall(drive);
   public final Turn turn = new Turn(90, drive, navx);
+  public final Move move = new Move(10000, drive);
 
   private final Joystick leftJoy;
   private final Joystick rightJoy;
@@ -58,6 +62,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton a = new JoystickButton(leftJoy, 3);
+    a.whileHeld(alignToBall);
   }
 
 
