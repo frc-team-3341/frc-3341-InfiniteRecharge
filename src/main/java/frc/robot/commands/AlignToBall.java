@@ -34,7 +34,7 @@ public class AlignToBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    d.arcadeDrive(0, Limelight.align(), false);
+    d.align(Limelight.align());
   }
 
   // Called once the command ends or is interrupted.
