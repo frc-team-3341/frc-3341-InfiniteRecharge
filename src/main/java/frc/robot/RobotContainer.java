@@ -32,6 +32,8 @@ public class RobotContainer {
 
 
 private Joystick shooterJoy = new Joystick(2);
+private JoystickButton storeButton = new JoystickButton(shooterJoy, 4);
+
 private JoystickButton shootButton = new JoystickButton(shooterJoy, 5);
   /*
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -48,8 +50,12 @@ private JoystickButton shootButton = new JoystickButton(shooterJoy, 5);
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    
     shootButton.whenPressed(new Shoot(0.3));
     shootButton.whenReleased(new Shoot(0));
+    //fill in lines below with nueva command
+    //storeButton.whenPressed();
+    //storeButton.whenPressed()
   }
 
 
