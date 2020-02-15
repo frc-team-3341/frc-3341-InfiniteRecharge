@@ -63,13 +63,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-	if (m_robotContainer.leftGetRawButton(1)) {
-		m_autonomousCommand = m_robotContainer.moveAndAlignToBall;
-	} else if (m_robotContainer.leftGetRawButton(2)) {
-		m_autonomousCommand = m_robotContainer.turn;
-	}
-	//m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-	SmartDashboard.putString("Selected Auto Command", m_autonomousCommand.getClass().getSimpleName());
+    if (m_robotContainer.leftGetRawButton(1)) {
+      m_autonomousCommand = m_robotContainer.moveAndAlignToBall;
+    } else if (m_robotContainer.leftGetRawButton(2)) {
+      m_autonomousCommand = m_robotContainer.turn;
+    }
+    if (m_autonomousCommand == null) {
+      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    }
+    SmartDashboard.putString("Auto Command", m_autonomousCommand.getClass().getSimpleName());
   }
 
   /**
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-	}
+	  }
   }
 
   /**
