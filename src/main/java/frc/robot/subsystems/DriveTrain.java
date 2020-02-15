@@ -26,10 +26,10 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
   private DifferentialDrive drive;
   public DriveTrain() {
-	left.setNeutralMode(NeutralMode.Brake);
-	leftFollow.setNeutralMode(NeutralMode.Brake);
-	right.setNeutralMode(NeutralMode.Brake);
-	rightFollow.setNeutralMode(NeutralMode.Brake);
+	  left.setNeutralMode(NeutralMode.Brake);
+	  leftFollow.setNeutralMode(NeutralMode.Brake);
+	  right.setNeutralMode(NeutralMode.Brake);
+	  rightFollow.setNeutralMode(NeutralMode.Brake);
     drive = new DifferentialDrive(left, right);
     left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
     right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
