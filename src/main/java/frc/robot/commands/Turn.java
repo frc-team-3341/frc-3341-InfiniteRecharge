@@ -8,30 +8,31 @@
 package frc.robot.commands;
 
 import option16.util.PID;
-
+import option16.util.PIDShuffleboard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Turn extends CommandBase {
-	private double angle;
+  private double angle;
 
 	private DriveTrain d;
 	private NavX n;
 
-	private PID pid;
+  private PID pid;
+  private PIDShuffleboard pidShuffleboard = new PIDShuffleboard("turn");
   /**
    * Creates a new Turn.
    */
   public Turn(double angle, DriveTrain d, NavX n) {
 	// Use addRequirements() here to declare subsystem dependencies.
-	this.angle = angle;
-	this.d = d;
-	this.n = n;
-	addRequirements(d, n);
-	n.resetAngle();
-	pid = new PID(0, 0, 0);
+    this.angle = angle;
+    this.d = d;
+    this.n = n;
+    addRequirements(d, n);
+    n.resetAngle();
+    pid = new PID(pidShuffleboard.getP(), pidShuffleboard.getI(), pidShuffleboard.getD());
   }
 
   // Called when the command is initially scheduled.

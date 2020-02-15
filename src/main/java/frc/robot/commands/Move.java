@@ -10,24 +10,28 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import option16.util.PID;
+import option16.util.PIDShuffleboard;
 
 public class Move extends CommandBase {
 	private double distance;
 
 	private DriveTrain d;
 	
-	private PID leftPID;
-	private PID rightPID;
+	private PID leftPID, rightPID;
+  private PIDShuffleboard leftPIDShuffleboard, rightPIDShuffleboard;
   /**
    * Creates a new Move.
    */
   public Move(double distance, DriveTrain d) {
-	// Use addRequirements() here to declare subsystem dependencies.
-	this.distance = distance;
-	this.d = d;
-	addRequirements(d);
-	leftPID = new PID(0, 0, 0);
-	rightPID = new PID(0, 0, 0);
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.distance = distance;
+    this.d = d;
+    addRequirements(d);
+    leftPID = new PID(0, 0, 0);
+    rightPID = new PID(0, 0, 0);
+    leftPIDShuffleboard = new PIDShuffleboard("leftMove");
+    rightPIDShuffleboard = new PIDShuffleboard("rightMove");
+
   }
 
   // Called when the command is initially scheduled.
@@ -37,6 +41,8 @@ public class Move extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    leftPID.setPID(leftPIDShuffleboard);
+    rightPID.setPID(rightPIDShuffleboard);
 	  leftPID.update(distance - d.getLeftPosition());
 	  rightPID.update(distance - d.getRightPosition());
 	  d.tankDrive(leftPID.getPower(), rightPID.getPower(), false);

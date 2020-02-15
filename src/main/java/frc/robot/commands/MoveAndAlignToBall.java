@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class MoveAndAlignToBall extends CommandBase {
 	DriveTrain d;
+	
 	private ShuffleboardTab PID = Shuffleboard.getTab("PID");
   	private NetworkTableEntry moveP = PID.add("moveP", .0386).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", .5)).withSize(2, 1).withPosition(0, 0).getEntry();
 	private NetworkTableEntry moveI = PID.add("moveI", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).withSize(2, 1).withPosition(2, 0).getEntry();
@@ -27,7 +28,7 @@ public class MoveAndAlignToBall extends CommandBase {
 	private NetworkTableEntry alignP = PID.add("alignP", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", .1)).withSize(2, 1).withPosition(0, 1).getEntry();
 	private NetworkTableEntry alignI = PID.add("alignI", 0).withSize(2, 1).withPosition(2, 1).getEntry();
 	private NetworkTableEntry alignD = PID.add("alignD", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).withSize(2, 1).withPosition(4, 1).getEntry();
-
+	
   /**
    * Creates a new AlignToBall.
    */
@@ -67,6 +68,6 @@ public class MoveAndAlignToBall extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(targetArea.getDouble(0) - Limelight.getArea()) < 1 && Limelight.move() < 0.2 && Limelight.align() < 0.2;
   }
 }
