@@ -9,15 +9,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class Shoot extends CommandBase {
+public class gateblock extends CommandBase {
   /**
-   * Creates a new Shoot.
+   * Creates a new gateblock.
    */
-  private double speed;
-  public Shoot(double pow) {
+  private double angle;
+  public gateblock(double degrees){
     addRequirements(RobotContainer.scorer);
-    speed = pow;
-    // Use addRequirements() here to declare subsystem dependencies.
+    angle = degrees;
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +27,7 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.scorer.beltSpin(speed);
+    RobotContainer.scorer.gateSpin(angle);
   }
 
   // Called once the command ends or is interrupted.

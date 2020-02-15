@@ -6,29 +6,28 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Shoot extends CommandBase {
+public class RoofMove extends CommandBase {
   /**
-   * Creates a new Shoot.
+   * Creates a new RoofMove.
    */
   private double speed;
-  public Shoot(double pow) {
-    addRequirements(RobotContainer.scorer);
-    speed = pow;
+  public RoofMove(double pow) {
     // Use addRequirements() here to declare subsystem dependencies.
+    speed = pow;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.scorer.roofAdjust(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.scorer.beltSpin(speed);
   }
 
   // Called once the command ends or is interrupted.

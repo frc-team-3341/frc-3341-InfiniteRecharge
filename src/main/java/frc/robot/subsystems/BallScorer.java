@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.Servo;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -16,12 +17,28 @@ public class BallScorer extends SubsystemBase {
   /**
    * Creates a new BallScorer.
    */
-  private TalonSRX shooter = new TalonSRX(4);
-    public BallScorer() {
+  private TalonSRX belt = new TalonSRX(4);
+  private TalonSRX storer = new TalonSRX(5);
+  private TalonSRX adjust = new TalonSRX(6);
+  private Servo gate = new Servo(1);
+
+  public BallScorer() {
 
   }
-  public void spin(double speed){
-    shooter.set(ControlMode.PercentOutput, speed);
+  public void beltSpin(double speed){
+    belt.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void storerSpin(double speed){
+    storer.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void roofAdjust(double speed){
+    adjust.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void gateSpin(double position) {
+    gate.setAngle(position);
   }
 
   @Override
