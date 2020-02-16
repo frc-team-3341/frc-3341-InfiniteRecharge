@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -28,9 +29,9 @@ public class DriveTrain extends SubsystemBase {
     left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
     right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
     //left.setInverted(true);
-    //right.setInverted(true);
+    right.setInverted(true);
     left.setSensorPhase(true);
-    right.setSensorPhase(true);
+    right.setSensorPhase(false);
 
     left.setSelectedSensorPosition(0, 0, 10);
     right.setSelectedSensorPosition(0, 0, 10);
@@ -52,9 +53,9 @@ public class DriveTrain extends SubsystemBase {
     return left.getSensorCollection().getPulseWidthVelocity() * 1 / (4096 * 10);
   }*/
   public void tankDrive(double leftpower, double rightpower){
-    //left.set(ControlMode.PercentOutput, leftpower);
-	//right.set(ControlMode.PercentOutput, rightpower);
-	drive.tankDrive(leftpower, rightpower);
+  left.set(ControlMode.PercentOutput, leftpower);
+	right.set(ControlMode.PercentOutput, rightpower);
+	//drive.tankDrive(leftpower, rightpower);
     //leftFollow.set(ControlMode.Follower, 2);
     //rightFollow.set(ControlMode.Follower, 3);
   }
@@ -69,7 +70,7 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     
-    tankDrive(-Robot.m_robotContainer.getLeftJoy().getY()+Robot.m_robotContainer.getLeftJoy().getZ(), -Robot.m_robotContainer.getLeftJoy().getY() - Robot.m_robotContainer.getLeftJoy().getZ());
+    tankDrive(-Robot.m_robotContainer.getLeftJoy().getY(), -Robot.m_robotContainer.getRightJoy().getY());
     //System.out.println("periodic is running" + temp);
   }
 
