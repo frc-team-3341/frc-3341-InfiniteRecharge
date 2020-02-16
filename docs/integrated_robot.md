@@ -17,6 +17,8 @@ Again this a sample, but this is what it would like for the same example as the 
 
 - [x] **1/7/2020** - Create the software documentation markdown page.
 - [x] **1/9/2020** - Get shuffleboard working and displaying values.
-- [ ] **2/15/2020** - Make tank drive into its own command.
-- [ ] **2/15/2020** - Make a button that inverts the drive train motors and the driver camera.
+- [x] **2/15/2020** - Make tank drive into its own command.
+- [x] **2/15/2020** - Make a button that inverts the drive train motors
+- [ ] **2/18/2020** - Set up the front and back camera
+- [ ] **2/18/2020** - Make that same button invert the cameras
 
