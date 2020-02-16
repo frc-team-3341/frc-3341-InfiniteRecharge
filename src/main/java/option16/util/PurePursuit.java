@@ -28,8 +28,6 @@ public class PurePursuit {
         Point robotPosition = new Point((float) robotOdo.getX(), (float) robotOdo.getY());
         float robotAngle = (float) robotOdo.getTheta();
         Point lookaheadPoint = getLookaheadPoint(robotPosition);
-        if (distanceFormula(robotPosition, lookaheadPoint) < finishedThreshold)
-            finished = true;
         double curvature = calculateCurvature(robotAngle, robotPosition, lookaheadPoint);
         double[] velocities = getTargetVelocities(curvature, (float) Constants.maxVelocity, (float) Constants.wheelBaseWidth);
         return velocities;
@@ -95,6 +93,9 @@ public class PurePursuit {
             // if we are closer than lookahead distance to the end, set it as the lookahead
             if (Math.sqrt((endX - robotPosition.x) * (endX - robotPosition.x) + (endY - robotPosition.y) * (endY - robotPosition.y)) <= lookaheadDistance) {
                 lookahead = new Point(endX, endY);
+                if (distanceFormula(lookahead, robotPosition) < finishedThreshold){
+                    finished = true;
+                }
             }
         }
 
