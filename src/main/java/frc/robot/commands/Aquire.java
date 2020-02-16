@@ -16,7 +16,7 @@ public class Aquire extends CommandBase {
   private double speed;
   public Aquire(double pow) {
     //Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.scorer);
+    addRequirements(RobotContainer.m_intake);
     speed = pow;
   }
 
@@ -28,7 +28,7 @@ public class Aquire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.scorer.storerSpin(speed);
+    RobotContainer.m_intake.storerSpin(speed);
   }
 
   // Called once the command ends or is interrupted.

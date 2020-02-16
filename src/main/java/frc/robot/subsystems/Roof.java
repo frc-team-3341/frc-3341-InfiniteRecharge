@@ -6,37 +6,28 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-import edu.wpi.first.wpilibj.Servo;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class BallScorer extends SubsystemBase {
+public class Roof extends SubsystemBase {
   /**
-   * Creates a new BallScorer.
+   * Creates a new Roof.
    */
-  private TalonSRX belt = new TalonSRX(2);
-  private Servo gate = new Servo(1);
+  private TalonSRX adjust = new TalonSRX(4);
 
-  public BallScorer() {
+  public Roof() {
 
   }
-  public void beltSpin(double speed){
-    belt.set(ControlMode.PercentOutput, speed);
-  }
 
-  public void gateSpin(double position) {
-    gate.set(position);
-  }
-
-  public double returnGatePosition() {
-    return gate.getPosition();
+  public void roofAdjust(double speed){
+    adjust.set(ControlMode.PercentOutput, speed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+  
+
 }
