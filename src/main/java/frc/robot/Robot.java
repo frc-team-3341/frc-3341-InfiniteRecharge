@@ -7,14 +7,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.DriveTrain.DrivetrainSide;
-import option16.util.*;
+import option16.util.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -52,9 +51,11 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
 
+	CommandScheduler.getInstance().run();
 
+	Limelight.setPipeline(3);
+	Limelight.update();
   }
 
   /**
@@ -78,7 +79,7 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }
+	}
   }
 
   /**
@@ -96,7 +97,8 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-    }
+	}
+	CommandScheduler.getInstance().registerSubsystem(DriveTrain.getInstance());
   }
 
   /**
@@ -105,13 +107,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
   }
-  TrapezoidalMotionProfile profile;
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    profile = new TrapezoidalMotionProfile(300, 1024, 4096);
   }
 
   /**
@@ -120,14 +120,5 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    /*System.out.println("Time: " + profile.getTime() + ", Vel: " + profile.getNextVelocity() + ", Finished: " + profile.isFinished());
-    System.out.println(DriveTrain.getInstance().getVelocities());
-    if (!profile.isFinished())
-      DriveTrain.getInstance().setVelocities(profile.getNextVelocity(), profile.getNextVelocity());
-    else
-      DriveTrain.getInstance().tankDrive(0, 0);*/
-    DriveTrain.getInstance().getTalon(DrivetrainSide.right).set(ControlMode.PercentOutput, -0.5);
-    System.out.println(DriveTrain.getInstance().getTalon(DrivetrainSide.right).getStatorCurrent());
-    //System.out.println(DriveTrain.getInstance().getVelocities());
   }
 }
