@@ -20,6 +20,6 @@ public class NotShootCG extends SequentialCommandGroup {
   public NotShootCG() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new Shoot(0), new gateblock(0));
+    super(new Shoot(0), new gateblock(0.5));
   }
 }

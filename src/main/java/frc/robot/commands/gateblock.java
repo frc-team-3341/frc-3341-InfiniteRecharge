@@ -38,6 +38,10 @@ public class gateblock extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (RobotContainer.scorer.returnGatePosition() == angle) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

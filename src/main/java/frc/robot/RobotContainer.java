@@ -10,10 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.Aquire;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Shoot;
 import frc.robot.subsystems.BallScorer;
+import frc.robot.subsystems.intake;
+import frc.robot.subsystems.Roof;
+import frc.robot.commands.AcquireCG;
+import frc.robot.commands.ShootCG;
+import frc.robot.commands.NotShootCG;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,20 +29,35 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static BallScorer scorer = new BallScorer();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private static Aquire m_Aquire = new Aquire(scorer);
-
-private Joystick shooterJoy = new Joystick(2);
-private JoystickButton storeButton = new JoystickButton(shooterJoy, 4);
-
-private JoystickButton shootButton = new JoystickButton(shooterJoy, 5);
+  private final ExampleSubsystem m_exampleSubsystem;
+  public static BallScorer scorer;
+  public static intake m_intake;
+  public static Roof m_Roof;
+  private double AcquirePow;
+  private double ShootPow;
+  private double RoofPow;
+  private final ExampleCommand m_autoCommand;
+  private final AcquireCG m_AquireCG;
+  private final ShootCG m_ShootCG;
+  private final NotShootCG m_NotShootCG;
+  private Joystick shooterJoy;
+  private JoystickButton storeButton;
+  private JoystickButton shootButton;
   /*
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+  m_exampleSubsystem = new ExampleSubsystem();
+  scorer = new BallScorer();
+  m_intake = new intake();
+  m_Roof = new Roof();
+  m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  m_AquireCG = new AcquireCG(AcquirePow, ShootPow, RoofPow);
+  m_ShootCG = new ShootCG();
+  m_NotShootCG = new NotShootCG();
+  shooterJoy = new Joystick(2);
+  storeButton = new JoystickButton(shooterJoy, 3);
+  shootButton = new JoystickButton(shooterJoy, 4);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -52,11 +70,15 @@ private JoystickButton shootButton = new JoystickButton(shooterJoy, 5);
    */
   private void configureButtonBindings() {
     
-    shootButton.whenPressed(new Shoot(0.3));
-    shootButton.whenReleased(new Shoot(0));
+    shootButton.whenPressed(new ShootCG());
+    shootButton.whenReleased(new NotShootCG());
+    storeButton.whenPressed(new AcquireCG(0.5, 0.5, 0.2));
+    storeButton.whenReleased(new AcquireCG(0, 0, 0));
     //fill in lines below with nueva command
     //storeButton.whenPressed();
     //storeButton.whenPressed()
+    //new Aquire(0.5), new Shoot(0.3), new RoofMove(0.2)
+    //storeButton.whenPressed(new )
   }
 
 

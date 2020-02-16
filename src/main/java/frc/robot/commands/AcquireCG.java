@@ -18,9 +18,9 @@ public class AcquireCG extends ParallelCommandGroup {
   /**
    * Creates a new AcquireCG.
    */
-  public AcquireCG() {
+  public AcquireCG(double pow1, double pow2, double pow3) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new Aquire(0.5), new Shoot(0.3), new RoofMove(0.2));
+    super(new Aquire(pow1), new Shoot(pow2), new RoofMove(pow3));
   }
 }

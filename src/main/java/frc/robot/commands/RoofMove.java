@@ -16,6 +16,7 @@ public class RoofMove extends CommandBase {
   private double speed;
   public RoofMove(double pow) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.m_Roof);
     speed = pow;
   }
 
@@ -27,7 +28,7 @@ public class RoofMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.scorer.roofAdjust(speed);
+    RobotContainer.m_Roof.roofAdjust(speed);
   }
 
   // Called once the command ends or is interrupted.

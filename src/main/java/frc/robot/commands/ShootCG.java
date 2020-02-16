@@ -20,6 +20,6 @@ public class ShootCG extends SequentialCommandGroup {
   public ShootCG() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new gateblock(90), new Shoot(0.5));
+    super(new gateblock(0), new Shoot(0.5));
   }
 }
