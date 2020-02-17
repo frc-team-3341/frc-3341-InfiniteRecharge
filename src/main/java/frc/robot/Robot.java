@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-	m_robotContainer = new RobotContainer();
-	Limelight.setPipeline(3);
+	  m_robotContainer = new RobotContainer();
+	  Limelight.setPipeline(3);
   }
 
   /**
@@ -50,8 +50,8 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-	CommandScheduler.getInstance().run();
-	Limelight.update();
+	  CommandScheduler.getInstance().run();
+	  Limelight.update();
   }
 
   /**
@@ -99,16 +99,15 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-	}
-	CommandScheduler.getInstance().registerSubsystem(m_robotContainer.drive);
+  	}
+	  CommandScheduler.getInstance().registerSubsystem(m_robotContainer.drive);
   }
 
   /**
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() {
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
@@ -120,6 +119,5 @@ public class Robot extends TimedRobot {
    * This function is called periodically during test mode.
    */
   @Override
-  public void testPeriodic() {
-  }
+  public void testPeriodic() {}
 }
