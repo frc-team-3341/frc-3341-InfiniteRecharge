@@ -3,6 +3,7 @@ package option16.util;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight {
 	private static NetworkTable table;
@@ -38,6 +39,10 @@ public class Limelight {
 		}
 		movePID.update(targetArea - area);
 		alignPID.update(x);
+		SmartDashboard.putNumber("x", x);
+		SmartDashboard.putNumber("y", y);
+		SmartDashboard.putNumber("area", area);
+		SmartDashboard.putBoolean("v", v == 1 ? true : false);
 	}
 
 	public static void disable() {
