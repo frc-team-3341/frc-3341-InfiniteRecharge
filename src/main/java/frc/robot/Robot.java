@@ -7,10 +7,12 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.DriveTrain.DrivetrainSide;
 import option16.util.Limelight;
 
 /**
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
   }
 
   /**
@@ -48,7 +51,9 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
 	CommandScheduler.getInstance().run();
+
 	Limelight.setPipeline(3);
 	Limelight.update();
   }
@@ -93,7 +98,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
 	}
-	CommandScheduler.getInstance().registerSubsystem(m_robotContainer.drive);
+	CommandScheduler.getInstance().registerSubsystem(DriveTrain.getInstance());
   }
 
   /**
@@ -114,5 +119,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+
   }
 }

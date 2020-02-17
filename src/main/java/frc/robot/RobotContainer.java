@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.MoveAndAlignToBall;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.NavX;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,10 +24,8 @@ import frc.robot.subsystems.NavX;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public DriveTrain drive = new DriveTrain();
-  public NavX navx = new NavX();
 
-  private final MoveAndAlignToBall m_autoCommand = new MoveAndAlignToBall(drive);
+  private final MoveAndAlignToBall m_autoCommand = new MoveAndAlignToBall(DriveTrain.getInstance());
 
   private Joystick leftJoy;
   private Joystick rightJoy;
