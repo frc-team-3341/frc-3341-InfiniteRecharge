@@ -62,8 +62,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton a = new JoystickButton(leftJoy, 3);
-    a.whileHeld(alignToBall);
+    new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
   }
 
 
