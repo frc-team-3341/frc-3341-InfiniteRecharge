@@ -7,10 +7,8 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -34,6 +32,10 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX right = new WPI_TalonSRX(3);
   private WPI_TalonSRX leftFollow = new WPI_TalonSRX(4);
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
+
+  private WPI_TalonSRX spinnyboi = new WPI_TalonSRX(6);
+  private WPI_TalonSRX liftyboi = new WPI_TalonSRX(7);
+
   private DifferentialDrive drive;
 
   public DriveTrain() {
