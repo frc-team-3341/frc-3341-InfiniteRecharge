@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DriverStation;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -32,9 +33,6 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX right = new WPI_TalonSRX(3);
   private WPI_TalonSRX leftFollow = new WPI_TalonSRX(4);
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
-
-  private WPI_TalonSRX spinnyboi = new WPI_TalonSRX(6);
-  private WPI_TalonSRX liftyboi = new WPI_TalonSRX(7);
 
   private DifferentialDrive drive;
 
@@ -120,6 +118,24 @@ public class DriveTrain extends SubsystemBase {
     leftFollow.set(ControlMode.Follower, 2);
     rightFollow.set(ControlMode.Follower, 3);
   }
+   
+  public void resetEncoders(){
+    left.setSelectedSensorPosition(0, 0, 10);
+    right.setSelectedSensorPosition(0, 0, 10);
+  }
+  public double getPosition(){
+    return (left.getSelectedSensorPosition()+right.getSelectedSensorPosition())/2;
+  }
+  public double getLeftPosition(){
+    return left.getSelectedSensorPosition();
+  }
+  public double getRightPosition(){
+    return right.getSelectedSensorPosition();
+  }
+  /*public double getSpeed(){
+    return left.getSensorCollection().getPulseWidthVelocity() * 1 / (4096 * 10);
+  }*/
+ 
 
   public String getVelocities(){
     return (right.getSelectedSensorVelocity(0) + ", " + right.getSelectedSensorVelocity(0));
