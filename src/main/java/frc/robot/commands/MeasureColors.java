@@ -1,5 +1,5 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+ /*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,42 +7,49 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.ColorSensor;
 
-public class MeasureColors extends Command {
-  public MeasureColors(ColorSensor colorSensor) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.m_robotContainer.sensor1);
+public class MeasureColors extends CommandBase {
+  /**
+   * Creates a new MeasureColors.
+   */
+
+
+  public MeasureColors() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(ColorSensor.getInstance());
   }
 
-  // Called just before this Command runs the first time
+  // Called when the command is initially scheduled.
   @Override
-  protected void initialize() {
+  public void initialize() {
   }
 
-  // Called repeatedly when this Command is scheduled to run
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  protected void execute() {
-    System.out.println(Robot.m_robotContainer.sensor1.getColors());
+  public void execute() {
+
+    //System.out.println(Robot.m_robotContainer.sensor1.)
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  // Called once the command ends or is interrupted.
   @Override
-  protected boolean isFinished() {
+  public void end(boolean interrupted) {
+    
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
     return false;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

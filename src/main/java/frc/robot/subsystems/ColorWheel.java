@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import frc.robot.commands.MeasureColors;
@@ -13,12 +6,9 @@ import java.util.Set;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ColorSensorV3;
-
-//import org.graalvm.compiler.java.GraphBuilderPhase.Instance;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,30 +23,26 @@ import com.revrobotics.ColorMatch;
 /**
  * Add your docs here.
  */
-public class ColorSensor extends SubsystemBase {
-  // Put methods for controlling this subsystem
+public class ColorWheel extends SubsystemBase {
+  // Put methods for controlling this subs ystem
   // here. Call these from Commands.
   private final I2C.Port i2cPort;
   private final ColorSensorV3 m_colorSensor;
   Color detectedColor;
-  private  ColorMatch m_colorMatcher; 
+  private final ColorMatch m_colorMatcher;
   private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private final TalonSRX wheel = new TalonSRX(3);
-  public TalonSRX hinge = new TalonSRX(4);
-  public Joystick joy = new Joystick(0);
-  // the button is manual button!!!
-  public JoystickButton button = new JoystickButton(joy, 8);
-  private static ColorSensor instance;
+  private final TalonSRX wheel = new TalonSRX(2);
+  // public Joystick joy = new Joystick(0);
+  // private final JoystickButton button = new JoystickButton(joy, 1);
+  public static ColorWheel instance;
 
-
-  public ColorSensor()
-  {
+  public ColorWheel() {
     i2cPort = I2C.Port.kOnboard;
     m_colorSensor = new ColorSensorV3(i2cPort);
-    detectedColor  = null;
+    detectedColor = null;
     m_colorMatcher = new ColorMatch();
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
@@ -68,9 +54,9 @@ public class ColorSensor extends SubsystemBase {
     System.out.println("color sensor constructor");
   }
 
-  public static ColorSensor getInstance(){
-    if (instance == null){
-      instance = new ColorSensor();
+  public static ColorWheel getInstance() {
+    if (instance == null) {
+      instance = new ColorWheel();
     }
     return instance;
   }
@@ -79,7 +65,6 @@ public class ColorSensor extends SubsystemBase {
     String RGB = "";
     detectedColor = m_colorSensor.getColor();
     RGB = "Red: " + detectedColor.red + ", Green: " + detectedColor.green + ", Blue: " + detectedColor.blue;
-    System.out.println(RGB);
     return RGB;
   }
 
@@ -100,63 +85,36 @@ public class ColorSensor extends SubsystemBase {
     } else {
       colorString = "unknown";
     }
-    //System.out.println(colorString);
+
     return colorString;
 
-    /*colorString += " , confidence: " + match.confidence();
-    colorString += m_colorSensor.hasReset();
-    return colorString;*/
+    //colorString += " , confidence: " + match.confidence;
+   // colorString += m_colorSensor.hasReset();
+    //return colorString;
   }
+
+ public double velocity(){
+
+    double velocity = wheel.getSelectedSensorVelocity(0);  
+    return velocity;
+ }
 
  public double getTicks(){
    return wheel.getSelectedSensorPosition();
  }
- public boolean getButton(){
-   return button.get();
- }
+//  public boolean getButton(){
+   
+//    return button.get();
+//  }
 
  public void spinWheel(double speed){
 
   wheel.set(ControlMode.PercentOutput, speed);
  }
 
- public void spinHinge(double speed){
-  hinge.set(ControlMode.PercentOutput, speed);
- }
-
  public void resetSensorPosition(){
    wheel.setSelectedSensorPosition(0);
  }
-
- public void colorControl(String c){
-   wheel.set(ControlMode.PercentOutput, 0.2);
-   if(c.equals("R")){
-     System.out.println("input is red");
-     if(matchColor().equals("red")){
-     wheel.set(ControlMode.PercentOutput, 0);
-     }
-    }
-   else if(c.equals("B")){
-     if(matchColor().equals("blue")){
-     wheel.set(ControlMode.PercentOutput, 0);
-     }
-   }
-   else if(c.equals("G")){
-     if(matchColor().equals("green")){
-       wheel.set(ControlMode.PercentOutput, 0);
-     }
-   }
-   else if(c.equals("Y")){
-     if(matchColor().equals("yellow")){
-       wheel.set(ControlMode.PercentOutput, 0);
-     }
-   }
-   else{
-     wheel.set(ControlMode.PercentOutput, 0.2);
-   }
- }
-
-
 
  @Override
   public void periodic() {
