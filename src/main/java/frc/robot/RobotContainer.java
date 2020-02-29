@@ -7,15 +7,29 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AlignToBall;
+import frc.robot.commands.Move;
+import frc.robot.commands.MoveAndAlignToBall;
+import frc.robot.commands.Path1;
+import frc.robot.commands.Path2;
+import frc.robot.commands.Path3;
+import frc.robot.commands.Turn;
+
 import frc.robot.commands.ReverseTankDrive;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,11 +39,27 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+
+  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall();
+  public final AlignToBall alignToBall = new AlignToBall();
+  public final Turn turn = new Turn(90);
+  public final Move move = new Move(10000);
+
+  private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
+
+  public final Path1 path1 = new Path1();
+  public final Path2 path2 = new Path2(delay);
+  public final Path3 path3 = new Path3();
+
+  private final Joystick leftJoy;
+  private final Joystick rightJoy;
+
   public static DriveTrain drive;
   public NavX navx = new NavX();
-  private Joystick leftJoy;
-  private Joystick rightJoy;
+
   public JoystickButton reverseButton;
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,10 +72,10 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
-  public Joystick getLeftJoy(){
+  public Joystick getLeftJoy() {
     return leftJoy;
   }
-  public Joystick getRightJoy(){
+  public Joystick getRightJoy() {
     return rightJoy;
   }
   /**
@@ -55,10 +85,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
+
     reverseButton = new JoystickButton(rightJoy, 2);
     reverseButton.whenPressed(new ReverseTankDrive());
-  }
 
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -67,6 +100,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+
+    return moveAndAlignToBall;
+  }
+
+  public boolean leftGetRawButton(int n) {
+	  return leftJoy.getRawButton(n);
+  }
+  public boolean rightGetRawButton(int n) {
+	  return rightJoy.getRawButton(n);
   }
 }

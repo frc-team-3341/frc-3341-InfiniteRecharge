@@ -8,34 +8,25 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import edu.wpi.first.wpilibj.SPI.Port;
 
 
 public class NavX extends SubsystemBase {
   /**
    * Creates a new NavX.
    */
-  AHRS navx;
-  
-  public NavX() {
-    navx = new AHRS(Port.kMXP);
-  }
+  private static AHRS navx;
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-  public double getAngle(){
-    return navx.getAngle();
+  public static AHRS getInstance(){
+    if (navx == null)
+      navx = new AHRS(SPI.Port.kMXP);
+    return navx;
   }
-
-  public void resetAngle(){
-    navx.zeroYaw();
-  }
-
 
 }
