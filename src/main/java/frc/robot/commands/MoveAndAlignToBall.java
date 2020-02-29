@@ -18,7 +18,6 @@ import option16.util.Limelight;
 import java.util.Map;
 
 public class MoveAndAlignToBall extends CommandBase {
-	DriveTrain d;
 	
 	private ShuffleboardTab PID = Shuffleboard.getTab("PID");
   	private NetworkTableEntry moveP = PID.add("moveP", .0386).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", .5)).withSize(2, 1).withPosition(0, 0).getEntry();
@@ -32,10 +31,9 @@ public class MoveAndAlignToBall extends CommandBase {
   /**
    * Creates a new AlignToBall.
    */
-  public MoveAndAlignToBall(DriveTrain d) {
+  public MoveAndAlignToBall() {
 	// Use addRequirements() here to declare subsystem dependencies.
-	this.d = d;
-	addRequirements(d);
+	addRequirements(DriveTrain.getInstance());
 	Limelight.setMoveConstants(moveP.getDouble(0), moveI.getDouble(0), moveD.getDouble(0), targetArea.getDouble(0));
 	Limelight.setAlignConstants(alignP.getDouble(0), alignI.getDouble(0), alignD.getDouble(0));
   }
@@ -47,7 +45,7 @@ public class MoveAndAlignToBall extends CommandBase {
   	// Called every time the scheduler runs while the command is scheduled.
  	@Override
   	public void execute() {
-		d.arcadeDrive(Limelight.move(), Limelight.align(), false);
+		DriveTrain.getInstance().arcadeDrive(Limelight.move(), Limelight.align(), false);
 		System.out.println("powers: " + Limelight.move() + " " + Limelight.align());
 		System.out.println("constants: " + 
 			moveP.getDouble(0) + " " + 

@@ -21,7 +21,7 @@ import frc.robot.commands.Path1;
 import frc.robot.commands.Path2;
 import frc.robot.commands.Path3;
 import frc.robot.commands.Turn;
-import frc.robot.subsystems.DriveTrain;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -32,16 +32,16 @@ import frc.robot.subsystems.DriveTrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall(DriveTrain.getInstance());
-  public final AlignToBall alignToBall = new AlignToBall(DriveTrain.getInstance());
-  public final Turn turn = new Turn(90, DriveTrain.getInstance(), navx);
-  public final Move move = new Move(10000, DriveTrain.getInstance());
+  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall();
+  public final AlignToBall alignToBall = new AlignToBall();
+  public final Turn turn = new Turn(90);
+  public final Move move = new Move(10000);
 
   private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
 
   public final Path1 path1 = new Path1();
   public final Path2 path2 = new Path2(delay);
-  public final Path3 path3 = new Path3(drive);
+  public final Path3 path3 = new Path3();
 
   private final Joystick leftJoy;
   private final Joystick rightJoy;
@@ -55,10 +55,10 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
-  public Joystick getLeftJoy(){
+  public Joystick getLeftJoy() {
     return leftJoy;
   }
-  public Joystick getRightJoy(){
+  public Joystick getRightJoy() {
     return rightJoy;
   }
   /**
@@ -70,7 +70,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.DriveTrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -17,12 +16,12 @@ public class Path3 extends SequentialCommandGroup {
   /**
    * Creates a new Path3.
    */
-  public Path3(DriveTrain d) {
+  public Path3() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
       //move forward
-      new MoveAndAlignToBall(d).withTimeout(5)
+      new MoveAndAlignToBall().withTimeout(5)
       //move forward and intake
     );
   }

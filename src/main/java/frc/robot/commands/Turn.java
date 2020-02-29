@@ -17,21 +17,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class Turn extends CommandBase {
   private double angle;
 
-	private DriveTrain d;
-	private NavX n;
-
   private PID pid;
   private PIDShuffleboard pidShuffleboard = new PIDShuffleboard("turn");
   /**
    * Creates a new Turn.
    */
-  public Turn(double angle, DriveTrain d, NavX n) {
+  public Turn(double angle) {
 	// Use addRequirements() here to declare subsystem dependencies.
     this.angle = angle;
-    this.d = d;
-    this.n = n;
-    addRequirements(d, n);
-    n.resetAngle();
+    addRequirements(DriveTrain.getInstance());
+    NavX.getInstance().reset();
     pid = new PID(pidShuffleboard.getP(), pidShuffleboard.getI(), pidShuffleboard.getD());
   }
 
@@ -42,8 +37,8 @@ public class Turn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-	  pid.update(angle - n.getAngle());
-	  d.arcadeDrive(0, pid.getPower(), false);
+	  pid.update(angle - NavX.getInstance().getAngle());
+	  DriveTrain.getInstance().arcadeDrive(0, pid.getPower(), false);
   }
 
   // Called once the command ends or is interrupted.
@@ -53,6 +48,6 @@ public class Turn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-	return Math.abs(n.getAngle() - angle) < 10 && pid.getPower() < .2;
+	return Math.abs(NavX.getInstance().getAngle() - angle) < 10 && pid.getPower() < .2;
   }
 }

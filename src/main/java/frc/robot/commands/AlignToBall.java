@@ -17,13 +17,10 @@ public class AlignToBall extends CommandBase {
    * Creates a new AligntoBall.
    */
 
-  private DriveTrain d;
-
   private PIDShuffleboard pidShuffleboard = new PIDShuffleboard("ballAlign");
   
-  public AlignToBall(DriveTrain d) {
+  public AlignToBall() {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.d = d;
     Limelight.setAlignConstants(pidShuffleboard.getP(), pidShuffleboard.getI(), pidShuffleboard.getD());
   }
 
@@ -34,7 +31,7 @@ public class AlignToBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    d.align(Limelight.align());
+    DriveTrain.getInstance().align(Limelight.align());
   }
 
   // Called once the command ends or is interrupted.

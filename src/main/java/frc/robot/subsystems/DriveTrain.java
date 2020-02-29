@@ -35,9 +35,6 @@ public class DriveTrain extends SubsystemBase {
 
   private DifferentialDrive drive;
   private double turn;
-  public void tankDrive(double leftpower, double rightpower, boolean squareInputs){
-	  drive.tankDrive(leftpower, rightpower, squareInputs);
-  }
 
   public DriveTrain() {
       left.configFactoryDefault();
@@ -147,7 +144,7 @@ public class DriveTrain extends SubsystemBase {
   public void align(double turn) {
     this.turn = turn;
   } 
-  public TalonSRX getTalon(DrivetrainSide side){
+  public WPI_TalonSRX getTalon(DrivetrainSide side){
     if (side.equals(DrivetrainSide.left)) {
       return left;
     } 

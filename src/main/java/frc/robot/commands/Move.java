@@ -14,19 +14,16 @@ import option16.util.PIDShuffleboard;
 
 public class Move extends CommandBase {
 	private double distance;
-
-	private DriveTrain d;
 	
 	private PID leftPID, rightPID;
   private PIDShuffleboard leftPIDShuffleboard, rightPIDShuffleboard;
   /**
    * Creates a new Move.
    */
-  public Move(double distance, DriveTrain d) {
+  public Move(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.distance = distance;
-    this.d = d;
-    addRequirements(d);
+    addRequirements(DriveTrain.getInstance());
     leftPID = new PID(0, 0, 0);
     rightPID = new PID(0, 0, 0);
     leftPIDShuffleboard = new PIDShuffleboard("leftMove");
@@ -43,9 +40,9 @@ public class Move extends CommandBase {
   public void execute() {
     leftPID.setPID(leftPIDShuffleboard);
     rightPID.setPID(rightPIDShuffleboard);
-	  leftPID.update(distance - d.getLeftPosition());
-	  rightPID.update(distance - d.getRightPosition());
-	  d.tankDrive(leftPID.getPower(), rightPID.getPower(), false);
+	  leftPID.update(distance - DriveTrain.getInstance().getLeftPosition());
+	  rightPID.update(distance - DriveTrain.getInstance().getRightPosition());
+	  DriveTrain.getInstance().tankDrive(leftPID.getPower(), rightPID.getPower(), false);
   }
 
   // Called once the command ends or is interrupted.
@@ -55,7 +52,7 @@ public class Move extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-	return Math.abs(distance - d.getLeftPosition()) < 4000 && leftPID.getPower() < .2 &&
-			Math.abs(distance - d.getRightPosition()) < 4000 && rightPID.getPower() < .2;
+	return Math.abs(distance - DriveTrain.getInstance().getLeftPosition()) < 4000 && leftPID.getPower() < .2 &&
+			Math.abs(distance - DriveTrain.getInstance().getRightPosition()) < 4000 && rightPID.getPower() < .2;
   }
 }
