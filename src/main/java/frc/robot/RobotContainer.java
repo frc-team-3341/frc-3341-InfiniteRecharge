@@ -7,14 +7,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignToBall;
 import frc.robot.commands.Move;
 import frc.robot.commands.MoveAndAlignToBall;
+import frc.robot.commands.Path1;
+import frc.robot.commands.Path2;
+import frc.robot.commands.Path3;
 import frc.robot.commands.Turn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
@@ -36,9 +41,14 @@ public class RobotContainer {
   public final Turn turn = new Turn(90, drive, navx);
   public final Move move = new Move(10000, drive);
 
+  private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
+
+  public final Path1 path1 = new Path1();
+  public final Path2 path2 = new Path2(delay);
+  public final Path3 path3 = new Path3(drive);
+
   private final Joystick leftJoy;
   private final Joystick rightJoy;
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
