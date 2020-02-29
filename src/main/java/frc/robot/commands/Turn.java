@@ -38,9 +38,9 @@ public class Turn extends CommandBase {
   public void execute() {
     System.out.println(navx.getAngle()- initialAngle + " angle");
     if (turnAngle > navx.getAngle() - initialAngle) {
-      drive.tankDrive(0.5, -0.5);
+      drive.turn(0.5, -0.5);
     } else {
-      drive.tankDrive(-0.5, 0.5);
+      drive.turn(-0.5, 0.5);
     }
   }
 

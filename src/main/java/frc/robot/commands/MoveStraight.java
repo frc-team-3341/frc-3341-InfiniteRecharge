@@ -41,9 +41,9 @@ public class MoveStraight extends CommandBase {
 
     // ONLY FOR GREEN ROBOT! ADJUST MOTORS FOR DIFFERENT ROBOTS
     if(d>0)
-      drive.tankDrive(0.515, 0.5);
+      drive.turn(0.5, 0.5);
     else 
-      drive.tankDrive(-0.515,-0.5);
+      drive.turn(-0.5,-0.5);
   }
 
   // Called once the command ends or is interrupted.

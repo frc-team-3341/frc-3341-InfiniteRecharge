@@ -10,7 +10,7 @@ package option16.util;
 
 import java.util.ArrayList;
 
-public class PurePursuitHandler {
+public class PurePursuit {
     private static ArrayList<Point> path = new ArrayList<>();
     private static float lookaheadDistance = Constants.lookaheadDistance;
     private static boolean finished = false;
@@ -21,15 +21,13 @@ public class PurePursuitHandler {
      * This function exists purely so that the end user does not have to call multiple methods to get this
      * velocity, but rather just this one method.
      *
-     * @return
+     * @return An array with two values, index 0 is the velocity for the left wheel and index 1 is the velocity for right wheel.
      */
     public static double[] getNextVelocities(Odometry odo){
         Odometry robotOdo = odo;
         Point robotPosition = new Point((float) robotOdo.getX(), (float) robotOdo.getY());
         float robotAngle = (float) robotOdo.getTheta();
         Point lookaheadPoint = getLookaheadPoint(robotPosition);
-        if (distanceFormula(robotPosition, lookaheadPoint) < finishedThreshold)
-            finished = true;
         double curvature = calculateCurvature(robotAngle, robotPosition, lookaheadPoint);
         double[] velocities = getTargetVelocities(curvature, (float) Constants.maxVelocity, (float) Constants.wheelBaseWidth);
         return velocities;
@@ -95,6 +93,9 @@ public class PurePursuitHandler {
             // if we are closer than lookahead distance to the end, set it as the lookahead
             if (Math.sqrt((endX - robotPosition.x) * (endX - robotPosition.x) + (endY - robotPosition.y) * (endY - robotPosition.y)) <= lookaheadDistance) {
                 lookahead = new Point(endX, endY);
+                if (distanceFormula(lookahead, robotPosition) < finishedThreshold){
+                    finished = true;
+                }
             }
         }
 
@@ -189,11 +190,16 @@ public class PurePursuitHandler {
     }
 
     /**
+     * Clears the current path.
+     */
+    public static void clearPath() {path = new ArrayList<Point>(); }
+
+    /**
      * Gets the lookahead distance.
      *
      * @return The lookahead distance of the robot.
      */
-    private static float getLookaheadDistance(){
+    public static float getLookaheadDistance(){
         return lookaheadDistance;
     }
 
