@@ -156,20 +156,43 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    if (DriverStation.getInstance().isOperatorControl()) {
-      double left = -Robot.m_robotContainer.getLeftJoy().getY(), right = -Robot.m_robotContainer.getRightJoy().getY();
-      tankDrive(left * Math.abs(left) + turn, right * Math.abs(right) - turn, false);
-      turn = 0;
-    }
-  }
+
+  
 
   public void arcadeDrive(double move, double turn, boolean squareInputs) {
 	  drive.arcadeDrive(move, turn, squareInputs);
 	  leftFollow.set(ControlMode.Follower, 2);
 	  rightFollow.set(ControlMode.Follower, 3);
+  }
+
+
+  private static DriveTrain instance;
+  private boolean inverted = false;
+  public DriveTrain() {}
+
+  public static DriveTrain getInstance(){
+    if (instance == null){
+      instance = new DriveTrain();
+    }
+
+    return instance;
+  }
+  public void tankDrive(double leftpower, double rightpower){
+    //set left motor inverted
+    left.set(ControlMode.PercentOutput, leftpower);
+    right.set(ControlMode.PercentOutput, rightpower);
+    leftFollow.set(ControlMode.Follower, 2);
+    rightFollow.set(ControlMode.Follower, 3);
+  }
+
+  public void reverseMotors(){
+    inverted = !inverted;
+    left.setInverted(!left.getInverted());
+    right.setInverted(!right.getInverted());
+  }
+
+  public boolean isInverted() {
+    return inverted;
   }
 
 }
