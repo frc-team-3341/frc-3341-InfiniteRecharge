@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.*;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -35,6 +34,7 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
 
   private DifferentialDrive drive;
+  private double turn;
 
   public DriveTrain() {
       left.configFactoryDefault();
@@ -107,7 +107,7 @@ public class DriveTrain extends SubsystemBase {
   }
   
   public void tankDrive(double left, double right, boolean squareInputs){
-	drive.tankDrive(left, right, squareInputs);
+  	drive.tankDrive(left, right, squareInputs);
     leftFollow.set(ControlMode.Follower, 2);
     rightFollow.set(ControlMode.Follower, 3);
   }
@@ -141,7 +141,10 @@ public class DriveTrain extends SubsystemBase {
     return (right.getSelectedSensorVelocity(0) + ", " + right.getSelectedSensorVelocity(0));
   }
 
-  public TalonSRX getTalon(DrivetrainSide side){
+  public void align(double turn) {
+    this.turn = turn;
+  } 
+  public WPI_TalonSRX getTalon(DrivetrainSide side){
     if (side.equals(DrivetrainSide.left)) {
       return left;
     } 
@@ -156,8 +159,11 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (DriverStation.getInstance().isOperatorControl())
-      tankDrive(Robot.m_robotContainer.getLeftJoy().getY(), Robot.m_robotContainer.getRightJoy().getY(), false);
+    if (DriverStation.getInstance().isOperatorControl()) {
+      double left = -Robot.m_robotContainer.getLeftJoy().getY(), right = -Robot.m_robotContainer.getRightJoy().getY();
+      tankDrive(left * Math.abs(left) + turn, right * Math.abs(right) - turn, false);
+      turn = 0;
+    }
   }
 
   public void arcadeDrive(double move, double turn, boolean squareInputs) {
