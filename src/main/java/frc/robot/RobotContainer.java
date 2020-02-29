@@ -17,7 +17,6 @@ import frc.robot.commands.Move;
 import frc.robot.commands.MoveAndAlignToBall;
 import frc.robot.commands.Turn;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.NavX;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,13 +27,10 @@ import frc.robot.subsystems.NavX;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public DriveTrain drive = new DriveTrain();
-  public NavX navx = new NavX();
-
-  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall(drive);
-  public final AlignToBall alignToBall = new AlignToBall(drive);
-  public final Turn turn = new Turn(90, drive, navx);
-  public final Move move = new Move(10000, drive);
+  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall(DriveTrain.getInstance());
+  public final AlignToBall alignToBall = new AlignToBall(DriveTrain.getInstance());
+  public final Turn turn = new Turn(90, DriveTrain.getInstance(), navx);
+  public final Move move = new Move(10000, DriveTrain.getInstance());
 
   private final Joystick leftJoy;
   private final Joystick rightJoy;
