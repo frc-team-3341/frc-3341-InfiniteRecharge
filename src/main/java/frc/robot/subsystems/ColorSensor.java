@@ -44,8 +44,8 @@ public class ColorSensor extends SubsystemBase {
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private final TalonSRX wheel = new TalonSRX(3);
-  public TalonSRX hinge = new TalonSRX(4);
+  private final TalonSRX wheel = new TalonSRX(5);
+  public TalonSRX hinge = new TalonSRX(3);
   public Joystick joy = new Joystick(0);
   // the button is manual button!!!
   public JoystickButton button = new JoystickButton(joy, 8);

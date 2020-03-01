@@ -18,8 +18,9 @@ public class HingeControl extends CommandBase {
    * Creates a new HingeControl.
    */
 
-   boolean startsDown;
-
+  boolean startsDown;
+  boolean top = ColorSensor.getInstance().hinge.getSensorCollection().isRevLimitSwitchClosed();
+  boolean bottom = ColorSensor.getInstance().hinge.getSensorCollection().isFwdLimitSwitchClosed();
   public HingeControl() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -34,29 +35,33 @@ public class HingeControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("top: " + ColorSensor.getInstance().hinge.getSensorCollection().isRevLimitSwitchClosed());
+    System.out.println("bottom: " + ColorSensor.getInstance().hinge.getSensorCollection().isFwdLimitSwitchClosed());
     if(startsDown == true){
-      ColorSensor.getInstance().spinHinge(0.2);
+      ColorSensor.getInstance().spinHinge(-0.2);
     }
     else{
-      ColorSensor.getInstance().spinHinge(-0.2);
+      ColorSensor.getInstance().spinHinge(0.2);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    ColorSensor.getInstance().spinHinge(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ColorSensor.getInstance().hinge.getSensorCollection().isRevLimitSwitchClosed()){
+    if(!startsDown && ColorSensor.getInstance().hinge.getSensorCollection().isFwdLimitSwitchClosed()){
       return true;
     }
-    if(ColorSensor.getInstance().hinge.getSensorCollection().isFwdLimitSwitchClosed()){
+    if(startsDown && ColorSensor.getInstance().hinge.getSensorCollection().isRevLimitSwitchClosed()){
       return true;
     }
-    
-    return false;
+    else{
+      return false;
+    }
   }
 }

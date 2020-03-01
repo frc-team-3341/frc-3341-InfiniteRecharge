@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ColorControl;
 import frc.robot.commands.ColorControlCounter;
+import frc.robot.commands.HingeControl;
 import frc.robot.commands.MotorControl;
 //import edu.wpi.first.wpilibj.util.Color;
 //import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -50,6 +51,7 @@ public class RobotContainer {
   public JoystickButton buttonYellow;
   public JoystickButton colorCountingControler;
   public JoystickButton motorControler;
+  public JoystickButton hingeButton;
 
 
 
@@ -100,6 +102,7 @@ public class RobotContainer {
     buttonYellow = new JoystickButton(joy,5);
     colorCountingControler = new JoystickButton(joy, 7);
     motorControler = new JoystickButton(joy, 8);
+    hingeButton = new JoystickButton(joy, 9);
     //motorControler = new JoystickButton(joy, 8);
     button.whenPressed(new RotationControl());
     buttonRed.whenPressed(new ColorControl("R", colorSensor));
@@ -108,6 +111,7 @@ public class RobotContainer {
     buttonYellow.whenPressed(new ColorControl("Y", colorSensor));
     colorCountingControler.whenPressed(new ColorControlCounter());
     motorControler.whileHeld(new MotorControl());
+    hingeButton.whenPressed(new HingeControl());
     //Robot.m_robotContainer.sensor1.button.whileActive( new RotationControl());
     //button2 = new JoystickButton(joy,2);
     //button2.whenPressed(new PrintCommand("Command"

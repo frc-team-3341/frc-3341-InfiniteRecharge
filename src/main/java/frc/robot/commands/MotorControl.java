@@ -31,25 +31,20 @@ public class MotorControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ColorSensor.getInstance().getButton() == true){
-      ColorSensor.getInstance().spinWheel(0.15);
-    }
+      ColorSensor.getInstance().spinWheel(-0.15);
   } 
   
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    ColorSensor.getInstance().spinWheel(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(ColorSensor.getInstance().getButton() == false){
-      return true;
-    }else{
-      return false;
-    }
-
+    //return(ColorSensor.getInstance().getButton() == false);
+    return false;
   }
 }
