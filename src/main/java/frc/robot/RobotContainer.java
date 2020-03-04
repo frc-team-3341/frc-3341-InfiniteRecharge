@@ -23,12 +23,8 @@ import frc.robot.commands.Path2;
 import frc.robot.commands.Path3;
 import frc.robot.commands.Turn;
 
-import frc.robot.commands.ReverseTankDrive;
-import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
 /**
@@ -39,8 +35,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
-
   public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall();
   public final AlignToBall alignToBall = new AlignToBall();
   public final Turn turn = new Turn(90);
@@ -68,7 +62,6 @@ public class RobotContainer {
     drive = new DriveTrain();
     leftJoy = new Joystick(0);
     rightJoy = new Joystick(1);
-    drive.setDefaultCommand(new TankDrive());
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -85,12 +78,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
     new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
-
-    reverseButton = new JoystickButton(rightJoy, 2);
-    reverseButton.whenPressed(new ReverseTankDrive());
-
+    new JoystickButton(rightJoy, 2).whenReleased(() -> DriveTrain.getInstance().reverseMotors());
   }
 
   /**
@@ -100,14 +89,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-
     return moveAndAlignToBall;
   }
 
-  public boolean leftGetRawButton(int n) {
-	  return leftJoy.getRawButton(n);
-  }
-  public boolean rightGetRawButton(int n) {
-	  return rightJoy.getRawButton(n);
-  }
 }
