@@ -29,7 +29,6 @@ public class LeadScrew extends SubsystemBase {
 
   @Override
   public void periodic() {
-    setDefaultCommand(new Screwing());
     // This method will be called once per scheduler run
   }
   public TalonSRX getScrewTalon() {

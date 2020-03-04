@@ -166,17 +166,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
 
-  private static DriveTrain instance;
   private boolean inverted = false;
-  public DriveTrain() {}
 
-  public static DriveTrain getInstance(){
-    if (instance == null){
-      instance = new DriveTrain();
-    }
 
-    return instance;
-  }
+  
   public void tankDrive(double leftpower, double rightpower){
     //set left motor inverted
     left.set(ControlMode.PercentOutput, leftpower);

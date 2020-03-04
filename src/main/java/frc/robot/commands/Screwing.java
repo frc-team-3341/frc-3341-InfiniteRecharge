@@ -17,8 +17,9 @@ public class Screwing extends CommandBase {
    */
   private double speed;
 
-  public Screwing() {
+  public Screwing(double p) {
     // Use addRequirements() here to declare subsystem dependencies.
+    speed = p;
     addRequirements(RobotContainer.screwer);
     
   }
@@ -32,15 +33,13 @@ public class Screwing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.screwer.spin(Robot.m_robotContainer.getScrewJoy().getY());
+    RobotContainer.screwer.spin(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(RobotContainer.screwer.getScrewTalon().getSensorCollection().isFwdLimitSwitchClosed()) {
-      RobotContainer.screwer.spin(0);
-    }
+    
   }
 
   // Returns true when the command should end.

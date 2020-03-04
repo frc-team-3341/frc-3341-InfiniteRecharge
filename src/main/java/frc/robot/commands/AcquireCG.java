@@ -9,6 +9,7 @@ package frc.robot.commands;
 import frc.robot.commands.Aquire;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.RoofMove;
+import frc.robot.subsystems.BallScorer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,9 +19,10 @@ public class AcquireCG extends ParallelCommandGroup {
   /**
    * Creates a new AcquireCG.
    */
-  public AcquireCG(double pow1, double pow2, double pow3) {
+  public AcquireCG() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new Aquire(pow1), new Shoot(pow2), new RoofMove(pow3));
+    //super(BallScorer.getInstance().acquireBalls(true), BallScorer.getInstance().beltSpin(BallScorer.beltDirection.UP));
+    super(BallScorer.getInstance().acquireBallsCommand(), BallScorer.getInstance().beltSpinCommand());
   }
 }

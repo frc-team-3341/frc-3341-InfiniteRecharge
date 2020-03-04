@@ -12,16 +12,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.BallScorer;
 import frc.robot.subsystems.intake;
 import frc.robot.subsystems.Roof;
 import frc.robot.commands.AcquireCG;
 import frc.robot.commands.ShootCG;
 import frc.robot.commands.NotShootCG;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LeadScrew;
-
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +32,7 @@ import frc.robot.commands.Path3;
 import frc.robot.commands.Turn;
 
 import frc.robot.commands.ReverseTankDrive;
+import frc.robot.commands.Screwing;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
@@ -51,46 +49,24 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem;
   public static BallScorer scorer;
   public static intake m_intake;
   public static Roof m_Roof;
+  public static LeadScrew screwer;
   private double AcquirePow;
   private double ShootPow;
   private double RoofPow;
-  private final ExampleCommand m_autoCommand;
-  private final AcquireCG m_AquireCG;
-  private final ShootCG m_ShootCG;
-  private final NotShootCG m_NotShootCG;
-  private Joystick shooterJoy;
-  private JoystickButton storeButton;
-  private JoystickButton shootButton;
-  /*
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-  m_exampleSubsystem = new ExampleSubsystem();
-  scorer = new BallScorer();
-  m_intake = new intake();
-  m_Roof = new Roof();
-  m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  m_AquireCG = new AcquireCG(AcquirePow, ShootPow, RoofPow);
-  m_ShootCG = new ShootCG();
-  m_NotShootCG = new NotShootCG();
-  shooterJoy = new Joystick(2);
-  storeButton = new JoystickButton(shooterJoy, 3);
-  shootButton = new JoystickButton(shooterJoy, 4);
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static LeadScrew screwer = new LeadScrew();
-
-
-
-  private Joystick screwJoy = new Joystick(2);
-  
-  public Joystick getScrewJoy(){
-    return screwJoy;
-  }
-
+  // private final AcquireCG m_AquireCG;
+  // private final ShootCG m_ShootCG;
+  // private final NotShootCG m_NotShootCG;
+  private Joystick mechJoy;
+  private JoystickButton liftUp;
+  private JoystickButton liftDown;
+  public JoystickButton intakeBallButton;
+  public JoystickButton dropBallButton;
+  public JoystickButton conveyorEmergencyButton;
+  public JoystickButton intakeEmergencyButton;
+  public JoystickButton gateButton;
   public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall();
   public final AlignToBall alignToBall = new AlignToBall();
   public final Turn turn = new Turn(90);
@@ -105,23 +81,47 @@ public class RobotContainer {
   private final Joystick leftJoy;
   private final Joystick rightJoy;
 
+
   public static DriveTrain drive;
   public NavX navx = new NavX();
 
   public JoystickButton reverseButton;
+  /*
+   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   */
+  public RobotContainer() {
+  scorer = new BallScorer();
+  // m_intake = new intake();
+  // m_Roof = new Roof();
+  // m_AquireCG = new AcquireCG(AcquirePow, ShootPow, RoofPow);
+  // m_ShootCG = new ShootCG();
+  // m_NotShootCG = new NotShootCG();
+  screwer = new LeadScrew();
+  drive = new DriveTrain();
+  drive.setDefaultCommand(new TankDrive());
+  leftJoy = new Joystick(0);
+  rightJoy = new Joystick(1);
+  mechJoy = new Joystick(2);
+  intakeBallButton = new JoystickButton(rightJoy, 3);
+  conveyorEmergencyButton = new JoystickButton(rightJoy, 5);
+  intakeEmergencyButton = new JoystickButton(rightJoy, 6);
+  dropBallButton = new JoystickButton(rightJoy, 4);
+  gateButton = new JoystickButton(rightJoy, 7);
+  liftUp = new JoystickButton(mechJoy, 3);
+  liftDown = new JoystickButton(mechJoy, 4);
+  reverseButton = new JoystickButton(rightJoy, 2);
+  configureButtonBindings();
+  }
+
 
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
-    drive = new DriveTrain();
-    leftJoy = new Joystick(0);
-    rightJoy = new Joystick(1);
-    drive.setDefaultCommand(new TankDrive());
+
+    
     // Configure the button bindings
-    configureButtonBindings();
-  }
+ 
   public Joystick getLeftJoy() {
     return leftJoy;
   }
@@ -136,21 +136,20 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    shootButton.whenPressed(new ShootCG());
-    shootButton.whenReleased(new NotShootCG());
-    storeButton.whenPressed(new AcquireCG(0.5, 0.5, 0.2));
-    storeButton.whenReleased(new AcquireCG(0, 0, 0));
+    // shootButton.whenPressed(new ShootCG());
+    // shootButton.whenReleased(new NotShootCG());
+    // storeButton.whenPressed(new AcquireCG(0.5, 0.5, 0.2));
+    // storeButton.whenReleased(new AcquireCG(0, 0, 0));
     //fill in lines below with nueva command
     //storeButton.whenPressed();
     //storeButton.whenPressed()
     //new Aquire(0.5), new Shoot(0.3), new RoofMove(0.2)
     //storeButton.whenPressed(new )
-
-    new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
-
-    reverseButton = new JoystickButton(rightJoy, 2);
+    new JoystickButton(rightJoy, 1).whileHeld(alignToBall);
+    liftUp.whenPressed(new Screwing(0.5));
+    liftDown.whenPressed(new Screwing(-0.5));
     reverseButton.whenPressed(new ReverseTankDrive());
-
+    intakeBallButton.whenPressed(new AcquireCG());
   }
 
   /**
@@ -160,10 +159,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-
     return moveAndAlignToBall;
   }
-
+  public Joystick getMechJoy() {
+    return mechJoy;
+  }
   public boolean leftGetRawButton(int n) {
 	  return leftJoy.getRawButton(n);
   }

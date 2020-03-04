@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -54,7 +56,7 @@ public class Pivot extends SubsystemBase {
     public void periodic() {
         //setDefaultCommand(new RotatePivot());
         // This method will be called once per scheduler run
-        //Pivot(Robot.m_robotContainer.getPivotJoy().getY());
+        pivot(Robot.m_robotContainer.getMechJoy().getY());
     }
     public TalonSRX getPivotTalon() {
         return pivotMotor;
