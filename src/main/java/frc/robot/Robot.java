@@ -33,8 +33,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-	  m_robotContainer = new RobotContainer();
-	  Limelight.setPipeline(3);
+	m_robotContainer = new RobotContainer();
+	Limelight.setPipeline(3);
+	PurePursuitHandler.addPoint(new Point(0,0));
+    	PurePursuitHandler.addPoint(new Point(4,0));
+   	PurePursuitHandler.addPoint(new Point(7,3));
+   	PurePursuitHandler.addPoint(new Point(10,0));
   }
 
   /**
@@ -53,6 +57,11 @@ public class Robot extends TimedRobot {
 	  CommandScheduler.getInstance().run();
   	Limelight.setPipeline(3);
 	  Limelight.update();
+	    double [] distance = DriveTrain.getInstance().getDistance();
+    double angle = DriveTrain.getInstance().getAngle();
+    System.out.println("X: " + distance[0]);
+    System.out.println("Y:" + distance[1]);
+    System.out.println("Angle: " + angle);
   }
 
   /**
@@ -79,7 +88,22 @@ public class Robot extends TimedRobot {
    * This function is called periodically during autonomous.
    */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+      double[] distance = DriveTrain.getInstance().getDistance();
+    double theta = (Angle.getInstance().getAngle());
+    x = distance[0];
+    y = distance[1];
+    System.out.println("Angle: " + theta);
+    System.out.println("X: " + x);
+    System.out.println("Y: " + y);
+    double [] velocities = PurePursuitHandler.getNextVelocities(new Odometry(x, y, Math.toRadians(theta)));
+    if(PurePursuitHandler.isFinished()) {
+     velocities[0] = 0;
+    // System.out.println("Finished!");
+     velocities[1] = 0;
+    }
+   DriveTrain.getInstance().setFPS(velocities[0], velocities[1]);
+  }
 
   @Override
   public void teleopInit() {
@@ -109,6 +133,11 @@ public class Robot extends TimedRobot {
    * This function is called periodically during test mode.
    */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+      double [] ds = DriveTrain.getInstance().getDistance();
+    System.out.println("X: "+ ds[0]);
+    System.out.println("Y: "+ ds[1]);
+    System.out.println("Angle: " + Angle.getInstance().getAngle());
+  }
 
 }
