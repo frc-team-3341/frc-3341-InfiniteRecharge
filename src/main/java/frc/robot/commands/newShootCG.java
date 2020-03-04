@@ -20,5 +20,7 @@ public class newShootCG extends ParallelCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(BallScorer.getInstance().beltSpinCommand(pow1), BallScorer.getInstance().flyWheelsCommand(bool));
+    //Make sure to use the commands them sevels. The commands used here are accessed from the instance of the respective subsystems,
+    //meaning this is command-based
   }
 }
