@@ -24,5 +24,6 @@ public class AcquireCG extends ParallelCommandGroup {
     // super(new FooCommand(), new BarCommand());super();
     //super(BallScorer.getInstance().acquireBalls(true), BallScorer.getInstance().beltSpin(BallScorer.beltDirection.UP));
     super(BallScorer.getInstance().acquireBallsCommand(pow1), BallScorer.getInstance().beltSpinCommand(pow2));
+    //These are using instances of the commands in the subsystems, make sure to change this to the commands themselves - Rishi
   }
 }
