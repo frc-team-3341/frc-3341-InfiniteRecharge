@@ -120,12 +120,9 @@ public class BallScorer extends SubsystemBase {
         numBalls = 0;
     }
 
-    public void acquireBalls(boolean acquire){
-        if (acquire)
-            acquirer.set(ControlMode.PercentOutput, 0.5);
-        else
-            acquirer.set(ControlMode.PercentOutput, 0);
-
+    public void acquireBalls(double pow){
+        
+        acquirer.set(ControlMode.PercentOutput, pow);
         if (acquirer.getSupplyCurrent() > currentThreshold && !acquiringBall){
             acquiringBall = true;
             numBalls++;
@@ -144,6 +141,7 @@ public class BallScorer extends SubsystemBase {
 
     @Override
     public void periodic() {
+      /*
         if (DriverStation.getInstance().isOperatorControl()){
             acquireBalls(true);
             beltSpin(beltDirection.UP);
@@ -155,11 +153,12 @@ public class BallScorer extends SubsystemBase {
             depositBalls(true);
         }
 
+        */
         System.out.println(numBalls);
         // This method will be called once per scheduler run
     }
 
-    public Command acquireBallsCommand(){
+    public Command acquireBallsCommand(int num){
     return new Command(){
     
       @Override
@@ -169,14 +168,16 @@ public class BallScorer extends SubsystemBase {
       }
 
       public boolean isFinished(){
-        acquireBalls(true);
+        if (num == 0) {acquireBalls(0);};
+        if (num == 1) {acquireBalls(0.5);}
+        if (num == 2) {acquireBalls(-0.5);}
         return true;
       }
     };
       
     }
 
-    public Command beltSpinCommand(){
+    public Command beltSpinCommand(int num){
       return new Command(){
       
         @Override
@@ -186,12 +187,31 @@ public class BallScorer extends SubsystemBase {
         }
   
         public boolean isFinished(){
-          beltSpin(BallScorer.beltDirection.UP);
+          if (num == 0) {beltSpin(BallScorer.beltDirection.STATIONARY);}
+          if (num == 1) {beltSpin(BallScorer.beltDirection.UP);}
+          if (num == 2) {beltSpin(BallScorer.beltDirection.DOWN);}
           return true;
         }
       };
         
       }
+
+      public Command flyWheelsCommand(boolean isOn){
+        return new Command(){
+        
+          @Override
+          public Set<Subsystem> getRequirements() {
+            // TODO Auto-generated method stub
+            return null;
+          }
+    
+          public boolean isFinished(){
+            depositBalls(isOn);
+            return true;
+          }
+        };
+          
+        }
 }
 
 // package frc.robot.subsystems;
