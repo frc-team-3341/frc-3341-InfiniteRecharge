@@ -18,7 +18,8 @@ public class LeadScrew extends SubsystemBase {
   /**
    * Creates a new leadScrew.
    */
-  private TalonSRX screw = new TalonSRX(2);
+  public boolean lock;
+  private TalonSRX screw = new TalonSRX(7);
 
   public LeadScrew() {
     //this.setDefaultCommand(new Screwing());
@@ -26,6 +27,19 @@ public class LeadScrew extends SubsystemBase {
   public void spin(double speed){
     screw.set(ControlMode.PercentOutput,speed);
   }
+  public void setLock(boolean lock) {
+    this.lock = lock;
+}
+public boolean getLock() {
+    return lock;
+}
+public boolean atTop() {
+    return screw.getSensorCollection().isRevLimitSwitchClosed();
+}
+public boolean atBottom() {
+    return screw.getSensorCollection().isFwdLimitSwitchClosed();
+}
+
 
   @Override
   public void periodic() {

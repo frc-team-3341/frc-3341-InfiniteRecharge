@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.BallScorer;
 import frc.robot.subsystems.intake;
 import frc.robot.subsystems.Roof;
+import frc.robot.subsystems.Switch;
 import frc.robot.commands.AcquireCG;
 import frc.robot.commands.ShootCG;
 import frc.robot.commands.NotShootCG;
@@ -36,7 +37,7 @@ import frc.robot.commands.Screwing;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.NavX;
-
+import frc.robot.subsystems.Pivot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -53,6 +54,8 @@ public class RobotContainer {
   public static intake m_intake;
   public static Roof m_Roof;
   public static LeadScrew screwer;
+  public static Pivot m_pivot;
+  public static Switch m_switch;
   private double AcquirePow;
   private double ShootPow;
   private double RoofPow;
@@ -96,6 +99,8 @@ public class RobotContainer {
   // m_AquireCG = new AcquireCG(AcquirePow, ShootPow, RoofPow);
   // m_ShootCG = new ShootCG();
   // m_NotShootCG = new NotShootCG();
+  m_pivot = new Pivot();
+  m_switch = new Switch();
   screwer = new LeadScrew();
   drive = new DriveTrain();
   drive.setDefaultCommand(new TankDrive());

@@ -32,6 +32,7 @@ public class Pivot extends SubsystemBase {
     public Pivot() {
         // RotatePivot r = new RotatePivot();
     }
+    
 
     public static Pivot getInstance(){
         if (instance == null)
