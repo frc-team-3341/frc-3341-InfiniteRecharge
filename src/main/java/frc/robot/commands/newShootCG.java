@@ -6,24 +6,21 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.commands.Aquire;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.RoofMove;
 import frc.robot.subsystems.BallScorer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AcquireCG extends ParallelCommandGroup {
+public class newShootCG extends ParallelCommandGroup {
   /**
-   * Creates a new AcquireCG.
+   * Creates a new newShootCG.
    */
-  public AcquireCG(int pow1, int pow2) {
+  public newShootCG(int pow1, boolean bool) {
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    //super(BallScorer.getInstance().acquireBalls(true), BallScorer.getInstance().beltSpin(BallScorer.beltDirection.UP));
-    super(BallScorer.getInstance().acquireBallsCommand(pow1), BallScorer.getInstance().beltSpinCommand(pow2));
-    //These are using instances of the commands in the subsystems, make sure to change this to the commands themselves - Rishi
+    // super(new FooCommand(), new BarCommand());
+    super(BallScorer.getInstance().beltSpinCommand(pow1), BallScorer.getInstance().flyWheelsCommand(bool));
+    //Make sure to use the commands them sevels. The commands used here are accessed from the instance of the respective subsystems,
+    //meaning this is command-based
   }
 }

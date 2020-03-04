@@ -24,6 +24,7 @@ import frc.robot.subsystems.LeadScrew;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.newShootCG;
 import frc.robot.commands.AlignToBall;
 import frc.robot.commands.Move;
 import frc.robot.commands.MoveAndAlignToBall;
@@ -154,7 +155,12 @@ public class RobotContainer {
     liftUp.whenPressed(new Screwing(0.5));
     liftDown.whenPressed(new Screwing(-0.5));
     reverseButton.whenPressed(new ReverseTankDrive());
-    intakeBallButton.whenPressed(new AcquireCG());
+    intakeBallButton.whenPressed(new AcquireCG(1, 1));
+    intakeBallButton.whenReleased(new AcquireCG(0, 0));
+    dropBallButton.whenPressed(new newShootCG(1, true));
+    dropBallButton.whenReleased(new newShootCG((0), false));
+    conveyorEmergencyButton.whenPressed(new newShootCG(2, false));
+    intakeEmergencyButton.whenPressed(new AcquireCG(2, 0));
   }
 
   /**
