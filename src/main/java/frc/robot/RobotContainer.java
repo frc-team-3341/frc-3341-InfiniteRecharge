@@ -7,9 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.BallScorer;
 import frc.robot.subsystems.intake;
@@ -18,8 +20,28 @@ import frc.robot.commands.AcquireCG;
 import frc.robot.commands.ShootCG;
 import frc.robot.commands.NotShootCG;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.LeadScrew;
+
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AlignToBall;
+import frc.robot.commands.Move;
+import frc.robot.commands.MoveAndAlignToBall;
+import frc.robot.commands.Path1;
+import frc.robot.commands.Path2;
+import frc.robot.commands.Path3;
+import frc.robot.commands.Turn;
+
+import frc.robot.commands.ReverseTankDrive;
+import frc.robot.commands.TankDrive;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.NavX;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -58,10 +80,54 @@ public class RobotContainer {
   shooterJoy = new Joystick(2);
   storeButton = new JoystickButton(shooterJoy, 3);
   shootButton = new JoystickButton(shooterJoy, 4);
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public static LeadScrew screwer = new LeadScrew();
+
+
+
+  private Joystick screwJoy = new Joystick(2);
+  
+  public Joystick getScrewJoy(){
+    return screwJoy;
+  }
+
+  public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall();
+  public final AlignToBall alignToBall = new AlignToBall();
+  public final Turn turn = new Turn(90);
+  public final Move move = new Move(10000);
+
+  private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
+
+  public final Path1 path1 = new Path1();
+  public final Path2 path2 = new Path2(delay);
+  public final Path3 path3 = new Path3();
+
+  private final Joystick leftJoy;
+  private final Joystick rightJoy;
+
+  public static DriveTrain drive;
+  public NavX navx = new NavX();
+
+  public JoystickButton reverseButton;
+
+
+  /**
+   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   */
+  public RobotContainer() {
+    drive = new DriveTrain();
+    leftJoy = new Joystick(0);
+    rightJoy = new Joystick(1);
+    drive.setDefaultCommand(new TankDrive());
     // Configure the button bindings
     configureButtonBindings();
   }
-
+  public Joystick getLeftJoy() {
+    return leftJoy;
+  }
+  public Joystick getRightJoy() {
+    return rightJoy;
+  }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -79,8 +145,13 @@ public class RobotContainer {
     //storeButton.whenPressed()
     //new Aquire(0.5), new Shoot(0.3), new RoofMove(0.2)
     //storeButton.whenPressed(new )
-  }
 
+    new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
+
+    reverseButton = new JoystickButton(rightJoy, 2);
+    reverseButton.whenPressed(new ReverseTankDrive());
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -89,6 +160,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+
+    return moveAndAlignToBall;
+  }
+
+  public boolean leftGetRawButton(int n) {
+	  return leftJoy.getRawButton(n);
+  }
+  public boolean rightGetRawButton(int n) {
+	  return rightJoy.getRawButton(n);
   }
 }
