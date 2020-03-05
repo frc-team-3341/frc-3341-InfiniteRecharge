@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ColorSensorV3;
+import com.ctre.phoenix.motorcontrol.*;
 
 //import org.graalvm.compiler.java.GraphBuilderPhase.Instance;
 
@@ -44,8 +45,8 @@ public class ColorSensor extends SubsystemBase {
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private final TalonSRX wheel = new TalonSRX(5);
-  public TalonSRX hinge = new TalonSRX(3);
+  private final TalonSRX wheel = new TalonSRX(9);
+  public TalonSRX hinge = new TalonSRX(11);
   public Joystick joy = new Joystick(0);
   // the button is manual button!!!
   public JoystickButton button = new JoystickButton(joy, 8);
@@ -66,6 +67,9 @@ public class ColorSensor extends SubsystemBase {
     wheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     wheel.setSelectedSensorPosition(0);
     System.out.println("color sensor constructor");
+    hinge.setInverted(true);
+    hinge.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+    hinge.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector , LimitSwitchNormal.NormallyClosed);
   }
 
   public static ColorSensor getInstance(){

@@ -95,23 +95,24 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    button = new JoystickButton(joy, 1);
-    buttonRed = new JoystickButton(joy, 2);
+    // button = new JoystickButton(joy, 1);
+    buttonRed = new JoystickButton(joy, 5);
     buttonBlue = new JoystickButton(joy, 3);
     buttonGreen = new JoystickButton(joy,4);
-    buttonYellow = new JoystickButton(joy,5);
-    colorCountingControler = new JoystickButton(joy, 7);
+    buttonYellow = new JoystickButton(joy,6);
+    colorCountingControler = new JoystickButton(joy, 1);
     motorControler = new JoystickButton(joy, 8);
-    hingeButton = new JoystickButton(joy, 9);
+    hingeButton = new JoystickButton(joy, 7);
     //motorControler = new JoystickButton(joy, 8);
-    button.whenPressed(new RotationControl());
+    //button.whenPressed(new RotationControl());
     buttonRed.whenPressed(new ColorControl("R", colorSensor));
     buttonBlue.whenPressed(new ColorControl("B", colorSensor));
     buttonGreen.whenPressed(new ColorControl("G", colorSensor)); 
     buttonYellow.whenPressed(new ColorControl("Y", colorSensor));
     colorCountingControler.whenPressed(new ColorControlCounter());
     motorControler.whileHeld(new MotorControl());
-    hingeButton.whenPressed(new HingeControl());
+    hingeButton.whileHeld(new HingeControl(0.5));
+    hingeButton.whenInactive(new HingeControl(-0.3));
     //Robot.m_robotContainer.sensor1.button.whileActive( new RotationControl());
     //button2 = new JoystickButton(joy,2);
     //button2.whenPressed(new PrintCommand("Command"

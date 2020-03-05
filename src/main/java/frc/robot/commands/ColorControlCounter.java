@@ -40,7 +40,7 @@ public class ColorControlCounter extends CommandBase {
   public void execute() {
    currentColor = ColorSensor.getInstance().matchColor();
       System.out.println("current color it is detecting"+ currentColor);
-    ColorSensor.getInstance().spinWheel(0.2);
+    ColorSensor.getInstance().spinWheel(0.8);
     if(color1.equals(currentColor)){
       c1 = true;
       //System.out.println(c1);

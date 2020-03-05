@@ -18,6 +18,7 @@ public class ColorControl extends CommandBase {
   //private final ColorSensor colorSensor;
   private String measuredColor;
   private String inputColor;
+  
 
   public ColorControl(String c, ColorSensor sensor) {
     // Use addRequirements() here to declare subsystem dependencies.
