@@ -41,7 +41,6 @@ public class RobotContainer {
   public final Move move = new Move(10000);
 
   private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
-
   public final Path1 path1 = new Path1();
   public final Path2 path2 = new Path2(delay);
   public final Path3 path3 = new Path3();
@@ -59,7 +58,6 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    drive = new DriveTrain();
     leftJoy = new Joystick(0);
     rightJoy = new Joystick(1);
     // Configure the button bindings
