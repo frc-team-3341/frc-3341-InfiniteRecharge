@@ -14,6 +14,10 @@
 ## High Level Software Plan
  Fill this out based on discussions from the Software Solutions meeting on 1/11/2020
 
+<<<<<<< HEAD
+=======
+> TODO: **@DanielRyu** (Acknowledgeed Master of Puns) will fill this out based on discussions from the Software Solutions meeting on 1/11/2020
+>>>>>>> origin/control_wheel
 
 ## Specific Software Plans
 

@@ -8,13 +8,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.*;
-import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import option16.util.Constants;
 
 public class DriveTrain extends SubsystemBase {
@@ -34,7 +32,6 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
 
   private DifferentialDrive drive;
-  private double turn;
 
   public DriveTrain() {
       left.configFactoryDefault();
@@ -141,9 +138,6 @@ public class DriveTrain extends SubsystemBase {
     return (right.getSelectedSensorVelocity(0) + ", " + right.getSelectedSensorVelocity(0));
   }
 
-  public void align(double turn) {
-    this.turn = turn;
-  } 
   public WPI_TalonSRX getTalon(DrivetrainSide side){
     if (side.equals(DrivetrainSide.left)) {
       return left;

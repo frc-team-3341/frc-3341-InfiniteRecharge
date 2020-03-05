@@ -11,7 +11,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-
 import frc.robot.subsystems.BallScorer;
 import frc.robot.subsystems.intake;
 import frc.robot.subsystems.Roof;
@@ -39,8 +38,17 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Pivot;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.MeasureColors;
+import frc.robot.commands.RotationControl;
+import frc.robot.subsystems.ColorSensor;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.robot.commands.ColorControl;
+import frc.robot.commands.ColorControlCounter;
+import frc.robot.commands.HingeControl;
+import frc.robot.commands.MotorControl;
+//import edu.wpi.first.wpilibj.util.Color;
+//import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import frc.robot.commands.ExampleCommand;
 
 
 /**
@@ -77,6 +85,27 @@ public class RobotContainer {
   public final Move move = new Move(10000);
 
   //private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
+  public ColorSensor colorSensor;
+  public MeasureColors measureColors;
+  public RotationControl rotational;
+  private final RotationControl m_autoCommand;
+  public ColorControlCounter colorControlCounter;
+  public ColorControl colorControl;
+  public JoystickButton button;
+  public MotorControl motorControl;
+
+  public JoystickButton buttonRed;
+  public JoystickButton buttonBlue;
+  public JoystickButton buttonGreen;
+  public JoystickButton buttonYellow;
+  public JoystickButton colorCountingControler;
+  public JoystickButton motorControler;
+  public JoystickButton hingeButton;
+
+
+
+  
+  
 
   public final Path1 path1 = new Path1();
   //public final Path2 path2 = new Path2(delay);
@@ -118,7 +147,26 @@ public class RobotContainer {
   m_pivot.setDefaultCommand(new MovePivot());
   drive.setDefaultCommand(new TankDrive());
 
-  configureButtonBindings();
+    // Configure the button bindings
+    System.out.println("a");
+    System.out.println("b");
+    colorSensor = new ColorSensor();
+    System.out.println("c");
+    measureColors = new MeasureColors();
+    System.out.println("d");
+    rotational = new RotationControl();
+    System.out.println("e");
+    m_autoCommand = new RotationControl();
+    System.out.println("f");
+    //colorControl = new ColorControl(0, colorSensor);
+    colorControlCounter = new ColorControlCounter();
+    motorControl = new MotorControl();
+    System.out.println("g");
+    configureButtonBindings();
+    System.out.println("h");
+
+    //CommandScheduler.getInstance().schedule(measureColors);
+    
   }
 
 
@@ -143,7 +191,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
     // shootButton.whenPressed(new ShootCG());
     // shootButton.whenReleased(new NotShootCG());
     // storeButton.whenPressed(new AcquireCG(0.5, 0.5, 0.2));
@@ -165,9 +212,29 @@ public class RobotContainer {
     gateButton.whenReleased(new gateblock(0.5));
     //conveyorEmergencyButton.whenPressed(new ShootCG(2, ));
     intakeEmergencyButton.whenPressed(new AcquireCG(-0.7, 0));
+    // button = new JoystickButton(mechJoy, 1);
+    buttonBlue = new JoystickButton(mechJoy, 3);
+    buttonGreen = new JoystickButton(mechJoy,4);
+    buttonYellow = new JoystickButton(mechJoy,6);
+    colorCountingControler = new JoystickButton(mechJoy, 1);
+    motorControler = new JoystickButton(mechJoy, 8);
+    hingeButton = new JoystickButton(mechJoy, 7);
+    //motorControler = new JoystickButton(mechJoy, 8);
+    //button.whenPressed(new RotationControl());
+    buttonRed.whenPressed(new ColorControl("R", colorSensor));
+    buttonBlue.whenPressed(new ColorControl("B", colorSensor));
+    buttonGreen.whenPressed(new ColorControl("G", colorSensor)); 
+    buttonYellow.whenPressed(new ColorControl("Y", colorSensor));
+    colorCountingControler.whenPressed(new ColorControlCounter());
+    motorControler.whileHeld(new MotorControl());
+    hingeButton.whileHeld(new HingeControl(0.5));
+    hingeButton.whenInactive(new HingeControl(-0.3));
+    //Robot.m_robotContainer.sensor1.button.whileActive( new RotationControl());
+    //button2 = new JoystickButton(joy,2);
+    //button2.whenPressed(new PrintCommand("Command"
+    
   }
-
-  /**
+/*
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous

@@ -8,43 +8,69 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.ColorSensor;
 
-public class ReverseTankDrive extends CommandBase {
+public class ColorControl extends CommandBase {
   /**
-   * Creates a new ReverseTankDrive.
+   * Creates a new ColorControl.
    */
+  //private final ColorSensor colorSensor;
+  private String measuredColor;
+  private String inputColor;
+  
 
-  //true if the motor isn't inverted
-  double flag = 0;
-
-  public ReverseTankDrive() {
+  public ColorControl(String c, ColorSensor sensor) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.drive);
+    addRequirements(sensor);
+    inputColor = c; 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    RobotContainer.drive.reverseMotors();
-    
+      ColorSensor.getInstance().spinWheel(0.2);
+       //ColorSensor.getInstance().colorControl(inputColor);
+       ColorSensor.getInstance().printColors(); 
+       ColorSensor.getInstance().matchColor();  
+       measuredColor = ColorSensor.getInstance().matchColor();
+       
+
+       
+   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    ColorSensor.getInstance().spinWheel(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return(FMStoColor(inputColor).equals(measuredColor));
+  }
+
+  public static String FMStoColor(String input){
+    if(input.equals("R")){
+      return "red";
+    }
+    else if(input.equals("B")){
+      return "blue";
+    }
+    else if(input.equals("G")){
+      return "green";
+    }
+    else if(input.equals("Y")){
+      return "yellow";
+    }
+    else{
+      return "unknown";
+    }
   }
 }
