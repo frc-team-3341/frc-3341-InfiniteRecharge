@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import option16.util.Constants;
 
 public class DriveTrain extends SubsystemBase {
@@ -32,6 +33,7 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX rightFollow = new WPI_TalonSRX(5);
 
   private DifferentialDrive drive;
+  private boolean inverted = false;
 
   public DriveTrain() {
       left.configFactoryDefault();
@@ -39,9 +41,9 @@ public class DriveTrain extends SubsystemBase {
       leftFollow.configFactoryDefault();
       rightFollow.configFactoryDefault();
 
-      right.setInverted(true);
+      right.setInverted(false);
       left.setInverted(false);
-      rightFollow.setInverted(true);
+      rightFollow.setInverted(false);
       leftFollow.setInverted(false);
 
       left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
@@ -150,26 +152,10 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-
-  
-
   public void arcadeDrive(double move, double turn, boolean squareInputs) {
 	  drive.arcadeDrive(move, turn, squareInputs);
 	  leftFollow.set(ControlMode.Follower, 2);
 	  rightFollow.set(ControlMode.Follower, 3);
-  }
-
-
-  private boolean inverted = false;
-
-
-  
-  public void tankDrive(double leftpower, double rightpower){
-    //set left motor inverted
-    left.set(ControlMode.PercentOutput, leftpower);
-    right.set(ControlMode.PercentOutput, rightpower);
-    leftFollow.set(ControlMode.Follower, 2);
-    rightFollow.set(ControlMode.Follower, 3);
   }
 
   public void reverseMotors(){
@@ -180,6 +166,15 @@ public class DriveTrain extends SubsystemBase {
 
   public boolean isInverted() {
     return inverted;
+  }
+
+  @Override
+  public void periodic() {
+    if (inverted) {
+      instance.tankDrive(-Robot.m_robotContainer.getRightJoy().getY(), -Robot.m_robotContainer.getLeftJoy().getY(), true);
+    } else {
+      instance.tankDrive(-Robot.m_robotContainer.getLeftJoy().getY(), -Robot.m_robotContainer.getRightJoy().getY(), true);
+    }
   }
 
 }

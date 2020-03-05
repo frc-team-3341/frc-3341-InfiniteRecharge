@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.subsystems.DriveTrain;
 import option16.util.Limelight;
 import option16.util.PIDShuffleboard;
 
@@ -30,6 +32,8 @@ public class AlignToBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    Limelight.setAlignConstants(pidShuffleboard.getP(), pidShuffleboard.getI(), pidShuffleboard.getD());
+    DriveTrain.getInstance().arcadeDrive(-Robot.m_robotContainer.getLeftJoy().getY(), Limelight.align(), false);
   }
 
   // Called once the command ends or is interrupted.

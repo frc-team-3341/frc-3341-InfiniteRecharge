@@ -11,15 +11,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.subsystems.BallScorer;
 import frc.robot.subsystems.intake;
-import frc.robot.subsystems.Roof;
 import frc.robot.subsystems.Switch;
 import frc.robot.commands.AcquireCG;
 import frc.robot.commands.ShootCG;
 import frc.robot.subsystems.LeadScrew;
 import frc.robot.commands.gateblock;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignToBall;
@@ -33,7 +32,6 @@ import frc.robot.commands.Turn;
 
 import frc.robot.commands.ReverseTankDrive;
 import frc.robot.commands.Screwing;
-import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.NavX;
@@ -80,15 +78,14 @@ public class RobotContainer {
   public JoystickButton intakeEmergencyButton;
   public JoystickButton gateButton;
   //public final MoveAndAlignToBall moveAndAlignToBall = new MoveAndAlignToBall();
- // public final AlignToBall alignToBall = new AlignToBall();
+  public final AlignToBall alignToBall = new AlignToBall();
   public final Turn turn = new Turn(90);
   public final Move move = new Move(10000);
 
-  //private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
+  private NetworkTableEntry delay = Shuffleboard.getTab("SmartDashboard").add("delay", 5).getEntry();
   public ColorSensor colorSensor;
   public MeasureColors measureColors;
   public RotationControl rotational;
-  private final RotationControl m_autoCommand;
   public ColorControlCounter colorControlCounter;
   public ColorControl colorControl;
   public JoystickButton button;
@@ -108,7 +105,7 @@ public class RobotContainer {
   
 
   public final Path1 path1 = new Path1();
-  //public final Path2 path2 = new Path2(delay);
+  public final Path2 path2 = new Path2(delay);
   public final Path3 path3 = new Path3();
 
   private final Joystick leftJoy;
@@ -140,12 +137,18 @@ public class RobotContainer {
   conveyorEmergencyButton = new JoystickButton(rightJoy, 5);
   intakeEmergencyButton = new JoystickButton(rightJoy, 6);
   dropBallButton = new JoystickButton(rightJoy, 4);
-  gateButton = new JoystickButton(rightJoy, 7);
+  gateButton = new JoystickButton(rightJoy, 11);
   screwUp = new JoystickButton(mechJoy, 3);
   screwDown = new JoystickButton(mechJoy, 4);
   reverseButton = new JoystickButton(rightJoy, 2);
   m_pivot.setDefaultCommand(new MovePivot());
-  drive.setDefaultCommand(new TankDrive());
+  buttonRed = new JoystickButton(mechJoy, 5);
+  buttonBlue = new JoystickButton(mechJoy, 6);
+  buttonGreen = new JoystickButton(mechJoy,7);
+  buttonYellow = new JoystickButton(mechJoy,8);
+  colorCountingControler = new JoystickButton(mechJoy, 9);
+  motorControler = new JoystickButton(mechJoy, 10);
+  hingeButton = new JoystickButton(mechJoy, 11);
 
     // Configure the button bindings
     System.out.println("a");
@@ -156,7 +159,6 @@ public class RobotContainer {
     System.out.println("d");
     rotational = new RotationControl();
     System.out.println("e");
-    m_autoCommand = new RotationControl();
     System.out.println("f");
     //colorControl = new ColorControl(0, colorSensor);
     colorControlCounter = new ColorControlCounter();
@@ -201,24 +203,19 @@ public class RobotContainer {
     //new Aquire(0.5), new Shoot(0.3), new RoofMove(0.2)
     //storeButton.whenPressed(new )
    // new JoystickButton(rightJoy, 1).whileHeld(alignToBall);
-    screwUp.whileHeld(new Screwing(0.5));
-    screwDown.whileHeld(new Screwing(-0.5));
+    screwUp.whileHeld(new Screwing(1));
+    screwDown.whileHeld(new Screwing(-1));
     reverseButton.whenPressed(new ReverseTankDrive());
     intakeBallButton.whenPressed(new AcquireCG(0.7, 0.7));
     intakeBallButton.whenReleased(new AcquireCG(0, 0));
-    dropBallButton.whenPressed(new ShootCG(0.5,1, 1));
-    dropBallButton.whenReleased(new ShootCG(0,0, 0));
-    gateButton.whenPressed(new gateblock(0));
-    gateButton.whenReleased(new gateblock(0.5));
-    //conveyorEmergencyButton.whenPressed(new ShootCG(2, ));
-    intakeEmergencyButton.whenPressed(new AcquireCG(-0.7, 0));
+    dropBallButton.whenPressed(new ShootCG(0.5,1));
+    dropBallButton.whenReleased(new ShootCG(0,0));
+    gateButton.whileHeld(new gateblock(0.7));
+    gateButton.whenReleased(new gateblock(1));
+    conveyorEmergencyButton.whenPressed(new ShootCG(-0.3, 0));
+    intakeEmergencyButton.whenPressed(new AcquireCG(-0.3, 0));
     // button = new JoystickButton(mechJoy, 1);
-    buttonBlue = new JoystickButton(mechJoy, 3);
-    buttonGreen = new JoystickButton(mechJoy,4);
-    buttonYellow = new JoystickButton(mechJoy,6);
-    colorCountingControler = new JoystickButton(mechJoy, 1);
-    motorControler = new JoystickButton(mechJoy, 8);
-    hingeButton = new JoystickButton(mechJoy, 7);
+    
     //motorControler = new JoystickButton(mechJoy, 8);
     //button.whenPressed(new RotationControl());
     buttonRed.whenPressed(new ColorControl("R", colorSensor));
@@ -233,6 +230,7 @@ public class RobotContainer {
     //button2 = new JoystickButton(joy,2);
     //button2.whenPressed(new PrintCommand("Command"
     
+    new JoystickButton(leftJoy, 3).whileHeld(alignToBall);
   }
 /*
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -241,7 +239,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-   // return moveAndAlignToBall;
+    // return moveAndAlignToBall;
     return null;
   }
   public Joystick getMechJoy() {

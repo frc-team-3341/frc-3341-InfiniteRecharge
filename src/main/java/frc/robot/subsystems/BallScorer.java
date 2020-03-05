@@ -229,7 +229,7 @@ public class BallScorer extends SubsystemBase {
   private TalonSRX belt = new TalonSRX(12);
  
 
-  private Servo gate = new Servo(1);
+  private Servo gate = new Servo(0);
 
   public BallScorer() {
 belt.setInverted(true);

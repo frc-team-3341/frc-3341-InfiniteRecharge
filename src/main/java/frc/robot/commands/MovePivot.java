@@ -29,17 +29,17 @@ public class MovePivot extends CommandBase {
   @Override
   public void execute() {
     
- if(RobotContainer.m_pivot.atBottom()) {
-  RobotContainer.screwer.setLock(true);
+//  if(RobotContainer.m_pivot.atBottom()) {
+//   RobotContainer.screwer.setLock(true);
 
-} else if (RobotContainer.m_pivot.atTop()) {
-  RobotContainer.screwer.setLock(false);
-} else {
-  RobotContainer.screwer.setLock(true);
-}
-if(!(RobotContainer.m_pivot.getLock())) {
+// } else if (RobotContainer.m_pivot.atTop()) {
+//   RobotContainer.screwer.setLock(false);
+// } else {
+//   RobotContainer.screwer.setLock(true);
+// }
+// if(!(RobotContainer.m_pivot.getLock())) {
 RobotContainer.m_pivot.pivot(Robot.m_robotContainer.getMechJoy().getY());
-}
+//}
 
   }
 

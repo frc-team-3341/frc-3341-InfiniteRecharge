@@ -49,6 +49,7 @@ public boolean atBottom() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    System.out.println(screw.getSupplyCurrent());
   }
   public TalonSRX getScrewTalon() {
     return screw;

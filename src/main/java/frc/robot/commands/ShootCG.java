@@ -16,10 +16,10 @@ public class ShootCG extends ParallelCommandGroup {
   /**
    * Creates a new ShootCG.
    */
-  public ShootCG(double pow1, double pow2, double servVal) {
+  public ShootCG(double pow1, double pow2) {
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new Shoot(pow1), new flywheelShoot(pow2), new gateblock(servVal));
+    super(new Shoot(pow1), new flywheelShoot(pow2));
   }
 }

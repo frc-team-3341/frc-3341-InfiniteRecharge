@@ -51,10 +51,10 @@ public class Pivot extends SubsystemBase {
         return lock;
     }
     public boolean atTop() {
-        return pivotMotor.getSensorCollection().isFwdLimitSwitchClosed();
+        return pivotMotor.getSensorCollection().isRevLimitSwitchClosed();
     }
     public boolean atBottom() {
-        return pivotMotor.getSensorCollection().isRevLimitSwitchClosed();
+        return pivotMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     @Override
