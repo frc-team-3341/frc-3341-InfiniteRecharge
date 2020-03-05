@@ -21,7 +21,7 @@ public class Path3 extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
       //move forward
-      new MoveAndAlignToBall().withTimeout(5)
+      //new MoveAndAlignToBall().withTimeout(5)
       //move forward and intake
     );
   }

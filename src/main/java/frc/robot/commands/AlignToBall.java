@@ -18,7 +18,7 @@ public class AlignToBall extends CommandBase {
    * Creates a new AligntoBall.
    */
 
-  private PIDShuffleboard pidShuffleboard = new PIDShuffleboard("ballAlign");
+  private PIDShuffleboard pidShuffleboard = new PIDShuffleboard("ballAlign", .03, 0, 0);
   
   public AlignToBall() {
     // Use addRequirements() here to declare subsystem dependencies.
