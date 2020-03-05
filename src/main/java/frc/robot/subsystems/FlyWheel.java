@@ -6,23 +6,26 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.flywheelShoot;
 
-public class intake extends SubsystemBase {
+public class FlyWheel extends SubsystemBase {
   /**
-   * Creates a new intake.
+   * Creates a new FlyWheel.
    */
-  private TalonSRX storer = new TalonSRX(10);
-  public intake() {
-
+  private TalonSRX wheelLeft = new TalonSRX(13);
+  private TalonSRX wheelRight = new TalonSRX(14);
+  public FlyWheel() {
+    wheelRight.setInverted(true);
   }
-
-  public void storerSpin(double speed){
-    storer.set(ControlMode.PercentOutput, speed);
+  public void flyWheelSpin(double speed) {
+    wheelLeft.set(ControlMode.PercentOutput,speed);
+    wheelRight.set(ControlMode.Follower,13);
   }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

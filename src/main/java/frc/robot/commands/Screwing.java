@@ -32,24 +32,25 @@ public class Screwing extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  //   if(RobotContainer.screwer.atTop()) {
-  //     RobotContainer.m_pivot.setLock(true);;
+    if(RobotContainer.screwer.atTop()) {
+      RobotContainer.m_pivot.setLock(true);;
      
-  //  } else if (RobotContainer.screwer.atBottom()) {
-  //    RobotContainer.m_pivot.setLock(false); 
-  //  }
-  //  else {
-  //    RobotContainer.m_pivot.setLock(true);;
-  //  }
-  // // System.out.println(RobotContainer.m_pivot.canUseLeadScrew);
-  //  if (!(RobotContainer.screwer.getLock())) {
+   } else if (RobotContainer.screwer.atBottom()) {
+     RobotContainer.m_pivot.setLock(false); 
+   }
+   else {
+     RobotContainer.m_pivot.setLock(true);;
+   }
+  // System.out.println(RobotContainer.m_pivot.canUseLeadScrew);
+   if (!(RobotContainer.screwer.getLock())) {
      RobotContainer.screwer.spin(speed);
- //  }
+  }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.screwer.spin(0);
     
   }
 

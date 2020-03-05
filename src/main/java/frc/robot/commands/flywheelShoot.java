@@ -6,18 +6,19 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RoofMove extends CommandBase {
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+
+public class flywheelShoot extends CommandBase {
   /**
-   * Creates a new RoofMove.
+   * Creates a new flywheelShoot.
    */
   private double speed;
-  public RoofMove(double pow) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_Roof);
+  public flywheelShoot(double pow) {
+    addRequirements(RobotContainer.flyWheel);
     speed = pow;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +29,7 @@ public class RoofMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_Roof.roofAdjust(speed);
+    RobotContainer.flyWheel.flyWheelSpin(speed);
   }
 
   // Called once the command ends or is interrupted.

@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,6 +25,10 @@ public class LeadScrew extends SubsystemBase {
 
   public LeadScrew() {
     //this.setDefaultCommand(new Screwing());
+    screw.setInverted(true);
+    screw.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+    screw.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+
   }
   public void spin(double speed){
     screw.set(ControlMode.PercentOutput,speed);
@@ -34,10 +40,10 @@ public boolean getLock() {
     return lock;
 }
 public boolean atTop() {
-    return screw.getSensorCollection().isRevLimitSwitchClosed();
+    return screw.getSensorCollection().isFwdLimitSwitchClosed();
 }
 public boolean atBottom() {
-    return screw.getSensorCollection().isFwdLimitSwitchClosed();
+    return screw.getSensorCollection().isRevLimitSwitchClosed();
 }
 
 

@@ -5,22 +5,22 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-import frc.robot.subsystems.BallScorer;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+// package frc.robot.commands;
+// import frc.robot.subsystems.BallScorer;
+// import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class newShootCG extends ParallelCommandGroup {
-  /**
-   * Creates a new newShootCG.
-   */
-  public newShootCG(int pow1, boolean bool) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(BallScorer.getInstance().beltSpinCommand(pow1), BallScorer.getInstance().flyWheelsCommand(bool));
-    //Make sure to use the commands them sevels. The commands used here are accessed from the instance of the respective subsystems,
-    //meaning this is command-based
-  }
-}
+// // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// // information, see:
+// // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+// public class newShootCG extends ParallelCommandGroup {
+//   /**
+//    * Creates a new newShootCG.
+//    */
+//   public newShootCG(int pow1, boolean bool) {
+//     // Add your commands in the super() call, e.g.
+//     // super(new FooCommand(), new BarCommand());
+//     super(BallScorer.getInstance().beltSpinCommand(pow1), BallScorer.getInstance().flyWheelsCommand(bool));
+//     //Make sure to use the commands them sevels. The commands used here are accessed from the instance of the respective subsystems,
+//     //meaning this is command-based
+//   }
+// }

@@ -21,7 +21,9 @@ public class Switch extends SubsystemBase {
     private static Switch instance;
 
     public Switch() {
+        
         balance = new TalonSRX(8);
+        balance.setInverted(false);
         //setDefaultCommand(new Translating());
     }
 

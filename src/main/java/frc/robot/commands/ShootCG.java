@@ -6,20 +6,20 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.commands.gateblock;
-import frc.robot.commands.Shoot;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ShootCG extends SequentialCommandGroup {
+public class ShootCG extends ParallelCommandGroup {
   /**
    * Creates a new ShootCG.
    */
-  public ShootCG() {
+  public ShootCG(double pow1, double pow2, double servVal) {
+
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new gateblock(0), new Shoot(0.5));
+    // super(new FooCommand(), new BarCommand());super();
+    super(new Shoot(pow1), new flywheelShoot(pow2), new gateblock(servVal));
   }
 }
