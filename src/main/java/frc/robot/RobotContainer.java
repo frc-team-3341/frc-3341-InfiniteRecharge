@@ -104,6 +104,7 @@ public class RobotContainer {
   public JoystickButton buttonYellow;
   public JoystickButton colorCountingControler;
   public JoystickButton motorControler;
+  public JoystickButton lastballbutton;
   public JoystickButton hingeButton;
 
   public final Path1 path1 = new Path1();
@@ -140,13 +141,14 @@ public class RobotContainer {
     gateButton = new JoystickButton(rightJoy, 6);
     screwUp = new JoystickButton(mechJoy, 3);
     screwDown = new JoystickButton(mechJoy, 4);
+    lastballbutton = new JoystickButton(mechJoy, 5);
     reverseButton = new JoystickButton(rightJoy, 2);
     m_pivot.setDefaultCommand(new MovePivot());
-    // COLOR CONTROL TESTING BUTTONS (NOT FOR COMPETITION)
-    buttonRed = new JoystickButton(mechJoy, 5);
-    buttonBlue = new JoystickButton(mechJoy, 6);
-    buttonGreen = new JoystickButton(mechJoy, 7);
-    buttonYellow = new JoystickButton(mechJoy, 8);
+    // // COLOR CONTROL TESTING BUTTONS (NOT FOR COMPETITION)
+    // buttonRed = new JoystickButton(mechJoy, 5);
+    // buttonBlue = new JoystickButton(mechJoy, 6);
+    // buttonGreen = new JoystickButton(mechJoy, 7);
+    // buttonYellow = new JoystickButton(mechJoy, 8);
     // COLOR WHEEL CONTROL BUTTONS
     colorButton = new JoystickButton(mechJoy, 12); // Color Control
     colorCountingControler = new JoystickButton(mechJoy, 10); // Rotatate 3 time
@@ -216,6 +218,9 @@ public class RobotContainer {
     intakeBallButton.whenReleased(new ShootCG(0, 2, 0));
     dropBallButton.whenPressed(new ShootCG(1, 1, 0.6, 0));
     dropBallButton.whenReleased(new ShootCG(0, 0, 2, 0));
+    lastballbutton.whenPressed(new ShootCG(0, 0, 2, 0.3));
+    lastballbutton.whenReleased(new ShootCG(0, 0, 2, 0));
+
     // gateButton.whileHeld(new gateblock(0.6));
     // gateButton.whenReleased(new gateblock(2));
 
