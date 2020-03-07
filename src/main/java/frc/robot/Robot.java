@@ -7,11 +7,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.commands.gateblock;
+import frc.robot.commands.GateBlock;
 import option16.util.Limelight;
 
 /**
@@ -35,7 +36,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 	m_robotContainer = new RobotContainer();
   Limelight.setPipeline(3);
-  new gateblock(1).schedule();
+  new GateBlock(1).schedule();
   }
 
   /**
@@ -99,7 +100,37 @@ public class Robot extends TimedRobot {
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    String gameData;
+gameData = DriverStation.getInstance().getGameSpecificMessage();
+if(gameData.length() > 0)
+{
+  switch (gameData.charAt(0))
+  {
+    case 'B' :
+      //Blue case code
+      m_robotContainer.setTagertColor("B");
+      break;
+    case 'G' :
+      //Green case code
+      m_robotContainer.setTagertColor("G");
+      break;
+    case 'R' :
+      //Red case code
+      m_robotContainer.setTagertColor("R");
+      break;
+    case 'Y' :
+      //Yellow case code
+      m_robotContainer.setTagertColor("Y");
+      break;
+    default :
+      //This is corrupt data
+      break;
+  }
+} else {
+  //Code for no data received yet
+}
+  }
 
   @Override
   public void testInit() {

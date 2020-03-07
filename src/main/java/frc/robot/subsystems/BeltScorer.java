@@ -121,7 +121,7 @@
 //     }
 
 //     public void acquireBalls(double pow){
-        
+
 //         acquirer.set(ControlMode.PercentOutput, pow);
 //         if (acquirer.getSupplyCurrent() > currentThreshold && !acquiringBall){
 //             acquiringBall = true;
@@ -160,7 +160,7 @@
 
 //     public Command acquireBallsCommand(int num){
 //     return new Command(){
-    
+
 //       @Override
 //       public Set<Subsystem> getRequirements() {
 //         // TODO Auto-generated method stub
@@ -174,18 +174,18 @@
 //         return true;
 //       }
 //     };
-      
+
 //     }
 
 //     public Command beltSpinCommand(int num){
 //       return new Command(){
-      
+
 //         @Override
 //         public Set<Subsystem> getRequirements() {
 //           // TODO Auto-generated method stub
 //           return null;
 //         }
-  
+
 //         public boolean isFinished(){
 //           if (num == 0) {beltSpin(BallScorer.beltDirection.STATIONARY);}
 //           if (num == 1) {beltSpin(BallScorer.beltDirection.UP);}
@@ -193,54 +193,60 @@
 //           return true;
 //         }
 //       };
-        
+
 //       }
 
 //       public Command flyWheelsCommand(boolean isOn){
 //         return new Command(){
-        
+
 //           @Override
 //           public Set<Subsystem> getRequirements() {
 //             // TODO Auto-generated method stub
 //             return null;
 //           }
-    
+
 //           public boolean isFinished(){
 //             depositBalls(isOn);
 //             return true;
 //           }
 //         };
-          
+
 //         }
 // }
 
 package frc.robot.subsystems;
+
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
-public class BallScorer extends SubsystemBase {
+public class BeltScorer extends SubsystemBase {
   /**
    * Creates a new BallScorer.
    */
   private TalonSRX belt = new TalonSRX(12);
- 
+  int state = 0;
+  long current_time;
 
-  private Servo gate = new Servo(0);
+  private Servo gate = new Servo(1);
 
-  public BallScorer() {
+  public BeltScorer() {
 belt.setInverted(true);
+belt.set(ControlMode.PercentOutput, 0);
   }
   public void beltSpin(double speed){
     belt.set(ControlMode.PercentOutput, speed);
-    
   }
  
 
   public void gateSpin(double position) {
+    System.out.println("Gate Angle is: " + position);
     gate.set(position);
   }
 
@@ -250,6 +256,16 @@ belt.setInverted(true);
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    SmartDashboard.putBoolean("Ball Acquired Read", RobotContainer.m_intake.isBallAcquired());
+    if (state == 0 && RobotContainer.m_intake.isBallAcquired()) {
+      belt.set(ControlMode.PercentOutput, 0.60);
+      state = 1;
+      current_time = System.currentTimeMillis();
+    }
+    if(state == 1 && System.currentTimeMillis() - current_time > 70){
+      belt.set(ControlMode.PercentOutput, 0);
+      state = 0;
+      RobotContainer.m_intake.setBallAcquired(false);
+    }
+    }
 }

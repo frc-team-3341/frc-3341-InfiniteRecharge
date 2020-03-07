@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,15 @@ public class FlyWheel extends SubsystemBase {
   private TalonSRX wheelRight = new TalonSRX(14);
   public FlyWheel() {
     wheelRight.setInverted(true);
+
+    wheelRight.configPeakOutputForward(1);
+    wheelRight.configPeakOutputReverse(-1);
+    wheelRight.setNeutralMode(NeutralMode.Coast);
+    
+    wheelLeft.configPeakOutputForward(1);
+    wheelLeft.configPeakOutputReverse(-1);
+    wheelLeft.setNeutralMode(NeutralMode.Coast);
+    
   }
   public void flyWheelSpin(double speed) {
     wheelLeft.set(ControlMode.PercentOutput,speed);

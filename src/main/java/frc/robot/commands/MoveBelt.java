@@ -6,18 +6,20 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 
-public class Aquire extends CommandBase {
+public class MoveBelt extends CommandBase {
   /**
-   * Creates a new Aquire.
+   * Creates a new Shoot.
    */
   private double speed;
-  public Aquire(double pow) {
-    //Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_intake);
+  private long currentTime;
+  public MoveBelt(double pow) {
+    currentTime = System.currentTimeMillis();
+    addRequirements(RobotContainer.scorer);
     speed = pow;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +30,8 @@ public class Aquire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intake.storerSpin(speed);
+    while(System.currentTimeMillis() - currentTime < 200){}
+    RobotContainer.scorer.beltSpin(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +42,10 @@ public class Aquire extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+  if (speed == 0) {
+    return true;
+  } else {
     return false;
   }
+}
 }

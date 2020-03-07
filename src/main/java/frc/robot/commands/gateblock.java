@@ -8,14 +8,15 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Gate;
 
-public class gateblock extends CommandBase {
+public class GateBlock extends CommandBase {
   /**
    * Creates a new gateblock.
    */
   private double angle;
-  public gateblock(double degrees){
-    addRequirements(RobotContainer.scorer);
+  public GateBlock(double degrees){
+    addRequirements(Gate.getInstance());
     angle = degrees;
   }
 
@@ -27,7 +28,8 @@ public class gateblock extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.scorer.gateSpin(angle);
+    RobotContainer.gate.backGateSpin(angle);
+    // RobotContainer.scorer.gateSpin(angle);
   }
 
   // Called once the command ends or is interrupted.

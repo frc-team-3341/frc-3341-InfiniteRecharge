@@ -33,7 +33,7 @@ public class ColorControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      ColorSensor.getInstance().spinWheel(0.2);
+      ColorSensor.getInstance().spinWheel(0.8);
        //ColorSensor.getInstance().colorControl(inputColor);
        ColorSensor.getInstance().printColors(); 
        ColorSensor.getInstance().matchColor();  

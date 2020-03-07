@@ -10,12 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class flywheelShoot extends CommandBase {
+public class FlywheelShoot extends CommandBase {
   /**
    * Creates a new flywheelShoot.
    */
   private double speed;
-  public flywheelShoot(double pow) {
+  public FlywheelShoot(double pow) {
     addRequirements(RobotContainer.flyWheel);
     speed = pow;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,6 +29,8 @@ public class flywheelShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    long currentTime = System.currentTimeMillis();
+    while(System.currentTimeMillis() - currentTime < 200){}
     RobotContainer.flyWheel.flyWheelSpin(speed);
   }
 

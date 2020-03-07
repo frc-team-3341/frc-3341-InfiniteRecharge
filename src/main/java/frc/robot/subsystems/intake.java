@@ -8,23 +8,52 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class intake extends SubsystemBase {
+public class Intake extends SubsystemBase {
   /**
    * Creates a new intake.
    */
   private TalonSRX storer = new TalonSRX(10);
-  public intake() {
+  private boolean ballAcquired, motorStarted;
+  private long motorStartTime;
+  private final static double threshold = 1;
 
+  public Intake() {
   }
 
   public void storerSpin(double speed){
+    
+    long currentTime = System.currentTimeMillis();
+    while(System.currentTimeMillis() - currentTime < 200){}
+
+    if(speed == 0)
+      ballAcquired = false;
+
     storer.set(ControlMode.PercentOutput, speed);
+  }
+
+  /**
+   * @return the ballAcquired
+   */
+  public boolean isBallAcquired() {
+    return ballAcquired;
+  }
+
+  public void setBallAcquired(boolean ballAcquired){
+    this.ballAcquired = ballAcquired;
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    double current = storer.getSupplyCurrent();
+    if (current > threshold){
+      ballAcquired = true;
+    }
+    SmartDashboard.putNumber("Intake Current", current);
+    SmartDashboard.putBoolean("Ball Acquired", ballAcquired);
   }
 }
