@@ -7,7 +7,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveTrain;
+import option16.util.Units;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,9 +25,6 @@ public class Path1 extends SequentialCommandGroup {
   public Path1() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(
-      //move forward
-      //drop balls
-    );
+    super(new AutoPath1(Units.feetToTicks(-6.5)), new WaitCommand(1), new ShootCG(0.6, 0.6, 0.6, 0), new WaitCommand(2), new ShootCG(0, 0, 2, 0), new AutoPath1(Units.feetToTicks(9)));
   }
 }

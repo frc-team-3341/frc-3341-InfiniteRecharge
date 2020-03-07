@@ -23,4 +23,8 @@ public class ShootCG extends ParallelCommandGroup {
   public ShootCG(double beltpower, double flywheelpower, double degrees, double acquirepower) {
       super(new GateBlock(degrees), new MoveBelt(beltpower), new FlywheelShoot(flywheelpower), new Acquire(acquirepower));
   }
+
+  public boolean isFinished(){
+    return true;
+  }
 }

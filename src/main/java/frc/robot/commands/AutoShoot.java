@@ -6,20 +6,19 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.BeltScorer;
+import frc.robot.subsystems.FlyWheel;
+import frc.robot.subsystems.Intake;
 
-public class Acquire extends CommandBase {
-
+public class AutoShoot extends CommandBase {
   /**
-   * Creates a new Aquire.
+   * Creates a new AutoShoot.
    */
-  private double speed;
-  public Acquire(double pow) {
-    //Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Intake.getInstance());
-    speed = pow;
+  public AutoShoot() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +29,7 @@ public class Acquire extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intake.storerSpin(speed);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +40,12 @@ public class Acquire extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    long currentTime = System.currentTimeMillis();
+
+    while (System.currentTimeMillis() - currentTime < 2000){
+      BeltScorer.getInstance().beltSpin(0.6);
+      RobotContainer.flyWheel.flyWheelSpin(0.8);
+    }
+    return true;
   }
 }

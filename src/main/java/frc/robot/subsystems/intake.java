@@ -22,6 +22,14 @@ public class Intake extends SubsystemBase {
   private long motorStartTime;
   private final static double threshold = 1;
 
+  public static Intake instance;
+
+  public static Intake getInstance(){
+    if (instance == null)
+      instance = new Intake();
+    return instance;
+  }
+
   public Intake() {
   }
 

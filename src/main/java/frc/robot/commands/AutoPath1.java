@@ -6,31 +6,31 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveTrain;
 
-public class Acquire extends CommandBase {
-
+public class AutoPath1 extends CommandBase {
   /**
-   * Creates a new Aquire.
+   * Creates a new AutoPath1.
    */
-  private double speed;
-  public Acquire(double pow) {
-    //Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Intake.getInstance());
-    speed = pow;
+  double l = 0;
+  public AutoPath1(double d) {
+    l = d;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(DriveTrain.getInstance());
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    DriveTrain.getInstance().resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intake.storerSpin(speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +41,7 @@ public class Acquire extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    DriveTrain.getInstance().moveDistance(l);
+    return true;
   }
 }

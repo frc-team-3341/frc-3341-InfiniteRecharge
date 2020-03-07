@@ -235,7 +235,14 @@ public class BeltScorer extends SubsystemBase {
   long current_time;
 
   private Servo gate = new Servo(1);
+  public static BeltScorer instance;
 
+  public static BeltScorer getInstance(){
+    if (instance == null)
+      instance = new BeltScorer();
+    return instance;
+  }
+  
   public BeltScorer() {
 belt.setInverted(true);
 belt.set(ControlMode.PercentOutput, 0);

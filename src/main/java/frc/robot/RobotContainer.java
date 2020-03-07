@@ -62,12 +62,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static BeltScorer scorer;
   public static Intake m_intake;
-  public static FlyWheel flyWheel;
+  public static FlyWheel flyWheel = new FlyWheel();
   public static Gate gate;
   // public static Roof m_Roof;
-  public static LeadScrew screwer;
-  public static Pivot m_pivot;
-  public static Switch m_switch;
+  public static LeadScrew screwer = new LeadScrew();
+  public static Pivot m_pivot = new Pivot();
+  public static Switch m_switch = new Switch();
   private double AcquirePow;
   private double ShootPow;
   private double RoofPow;
@@ -114,7 +114,7 @@ public class RobotContainer {
   private final Joystick leftJoy;
   private final Joystick rightJoy;
 
-  public static DriveTrain drive;
+  public static DriveTrain drive = DriveTrain.getInstance();
   public NavX navx = new NavX();
 
   public JoystickButton reverseButton;
@@ -123,15 +123,13 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    scorer = new BeltScorer();
-    m_intake = new Intake();
-    flyWheel = new FlyWheel();
+    //drive = new DriveTrain();
+    //scorer = new BeltScorer();
+    // flyWheel = FlyWheel.getInstance();
     // m_Roof = new Roof();
+    m_intake = Intake.getInstance();
     gate = Gate.getInstance();
-    m_pivot = new Pivot();
-    m_switch = new Switch();
-    screwer = new LeadScrew();
-    drive = new DriveTrain();
+    scorer = BeltScorer.getInstance();
     leftJoy = new Joystick(0);
     rightJoy = new Joystick(1);
     mechJoy = new Joystick(2);
@@ -218,7 +216,7 @@ public class RobotContainer {
     intakeBallButton.whenReleased(new ShootCG(0, 2, 0));
     dropBallButton.whenPressed(new ShootCG(1, 1, 0.6, 0));
     dropBallButton.whenReleased(new ShootCG(0, 0, 2, 0));
-    lastballbutton.whenPressed(new ShootCG(0, 0, 2, 0.3));
+    lastballbutton.whenPressed(new ShootCG(0, 0, 2, -0.3));
     lastballbutton.whenReleased(new ShootCG(0, 0, 2, 0));
 
     // gateButton.whileHeld(new gateblock(0.6));

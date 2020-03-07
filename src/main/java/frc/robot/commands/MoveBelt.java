@@ -8,6 +8,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.BeltScorer;
 
 public class MoveBelt extends CommandBase {
   /**
@@ -17,7 +18,7 @@ public class MoveBelt extends CommandBase {
   private long currentTime;
   public MoveBelt(double pow) {
     currentTime = System.currentTimeMillis();
-    addRequirements(RobotContainer.scorer);
+    addRequirements(BeltScorer.getInstance());
     speed = pow;
     // Use addRequirements() here to declare subsystem dependencies.
   }
