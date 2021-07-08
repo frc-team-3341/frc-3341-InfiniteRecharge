@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 
 public class Switch extends SubsystemBase {
     /**
@@ -20,7 +21,9 @@ public class Switch extends SubsystemBase {
     private static Switch instance;
 
     public Switch() {
+        
         balance = new TalonSRX(8);
+        balance.setInverted(false);
         //setDefaultCommand(new Translating());
     }
 
@@ -38,6 +41,7 @@ public class Switch extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        move(Robot.m_robotContainer.getMechJoy().getX());
     }
 
     public TalonSRX getBalanceTalon() {

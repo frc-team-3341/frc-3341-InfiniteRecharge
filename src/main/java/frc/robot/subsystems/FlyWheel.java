@@ -4,28 +4,30 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.flywheelShoot;
 
-
-public class NavX extends SubsystemBase {
+public class FlyWheel extends SubsystemBase {
   /**
-   * Creates a new NavX.
+   * Creates a new FlyWheel.
    */
-  private static AHRS navx;
-
+  private TalonSRX wheelLeft = new TalonSRX(13);
+  private TalonSRX wheelRight = new TalonSRX(14);
+  public FlyWheel() {
+    wheelRight.setInverted(true);
+  }
+  public void flyWheelSpin(double speed) {
+    wheelLeft.set(ControlMode.PercentOutput,speed);
+    wheelRight.set(ControlMode.Follower,13);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
-  public static AHRS getInstance(){
-    if (navx == null)
-      navx = new AHRS(SPI.Port.kMXP);
-    return navx;
-  }
-
 }

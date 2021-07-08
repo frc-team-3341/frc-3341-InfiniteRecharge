@@ -4,28 +4,27 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
+package frc.robot.subsystems;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
-public class NavX extends SubsystemBase {
+public class intake extends SubsystemBase {
   /**
-   * Creates a new NavX.
+   * Creates a new intake.
    */
-  private static AHRS navx;
+  private TalonSRX storer = new TalonSRX(10);
+  public intake() {
+
+  }
+
+  public void storerSpin(double speed){
+    storer.set(ControlMode.PercentOutput, speed);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
-  public static AHRS getInstance(){
-    if (navx == null)
-      navx = new AHRS(SPI.Port.kMXP);
-    return navx;
-  }
-
 }
